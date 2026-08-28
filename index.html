@@ -72,6 +72,7 @@
     display:flex;
     align-items:center;
     justify-content:center;
+    flex-wrap:wrap;
     gap:10px;
   }
   .eyebrow::before{
@@ -79,6 +80,32 @@
     width:22px; height:1px;
     background:var(--gold);
     display:inline-block;
+  }
+  .view-toggle{
+    display:inline-flex;
+    gap:6px;
+    margin-left:4px;
+    text-transform:none;
+    letter-spacing:normal;
+  }
+  .view-btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    font-weight:500;
+    padding:5px 13px;
+    border-radius:100px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--text-dim);
+    cursor:pointer;
+    transition:all 0.15s ease;
+  }
+  .view-btn:hover{ color:var(--text); border-color:#4a4d5a; }
+  .view-btn.active{
+    background:var(--gold);
+    color:var(--bg);
+    border-color:var(--gold);
+    font-weight:600;
   }
   h1{
     font-size:clamp(32px, 5vw, 52px);
@@ -373,9 +400,15 @@
 <body>
 
 <div class="wrap hero">
-  <div class="eyebrow">University cross-ranking analysis · 2025–2026 editions</div>
-  <h1>Which colleges survive <em>every</em> ranking lens — not just one.</h1>
-  <p class="hero-sub">Five major global ranking systems disagree constantly, because each rewards a different definition of excellence. This report finds the US universities that place consistently across <strong>all five</strong> — QS, THE, ARWU, CWUR, and US News — at once. Pick a cutoff below to see how the qualifying set changes.</p>
+  <div class="eyebrow">
+    <span>University cross-ranking analysis · 2025–2026 editions</span>
+    <span class="view-toggle" role="tablist" aria-label="Ranking view">
+      <button class="view-btn active" data-view="global" role="tab" aria-selected="true">Global View</button>
+      <button class="view-btn" data-view="us" role="tab">US View</button>
+    </span>
+  </div>
+  <h1 id="hero-title">Which colleges survive <em>every</em> ranking lens — not just one.</h1>
+  <p class="hero-sub" id="hero-sub-text">Five major global ranking systems disagree constantly, because each rewards a different definition of excellence. This report finds the US universities that place consistently across <strong>all five</strong> — QS, THE, ARWU, CWUR, and US News — at once. Pick a cutoff below to see how the qualifying set changes.</p>
 </div>
 
 <details class="how-it-works">
@@ -412,7 +445,7 @@
       <div>
         <h2>What "consensus" means here</h2>
       </div>
-      <div class="approach-body">
+      <div class="approach-body" id="approach-body-content">
         <p><strong>The filter:</strong> take a school's rank in each of the five systems' most recent edition, and keep only the schools that place <strong><span id="approach-cutoff-text">25th</span> or better in every single one</strong>. Excelling in three out of five doesn't count.</p>
         <p><strong>The score:</strong> for the schools that clear the bar, rank them by the simple average of their five positions — a lower number means the school is consistently near the very top, not just consistently qualifying.</p>
         <div class="formula">consensus_score = ( US News + THE + QS + CWUR + ARWU ) / 5</div>
@@ -480,11 +513,11 @@
       <div class="table-col">
         <div class="results-head">
           <h2 id="results-heading">11 schools clear the bar</h2>
-          <p class="results-note">Sorted by consensus score. All figures verified directly against each publisher's own current release. No estimates unless marked *.</p>
+          <p class="results-note" id="results-note-text">Sorted by consensus score. All figures verified directly against each publisher's own current release. No estimates unless marked *.</p>
         </div>
         <table>
           <thead>
-            <tr>
+            <tr id="table-head-row">
               <th>#</th>
               <th>University</th>
               <th class="num">US&nbsp;News</th>
@@ -505,7 +538,7 @@
 <div class="near">
   <div class="wrap">
     <div class="near-head">
-      <div class="kicker">Close, but not quite</div>
+      <div class="kicker">Near the bar</div>
       <h2 id="near-heading">Close, but not quite</h2>
       <p id="near-sub"></p>
     </div>
@@ -523,7 +556,7 @@
 <footer>
   <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:12px;">
     <p>Sources: QS World University Rankings 2026 · THE World University Rankings 2026 · ARWU / ShanghaiRanking 2025 · CWUR Global 2000, 2026 · US News Best Global Universities 2026–27</p>
-    <p>Compiled August 2026</p>
+    <p>Global View ranks against all universities worldwide · US View re-ranks among US institutions only · Compiled August 2026</p>
   </div>
 </footer>
 
@@ -558,11 +591,13 @@ const BADGES = {
   Brown:      { color:"#4E3629", text:"B" },
   GeorgiaTech:{ color:"#B3A369", text:"GT" },
   Purdue:     { color:"#CEB888", text:"P" },
-  OhioState:  { color:"#BB0000", text:"OSU" }
+  OhioState:  { color:"#BB0000", text:"OSU" },
+  CMU:        { color:"#C41230", text:"CMU" }
 };
 
+// GLOBAL VIEW: each value is the school's absolute (global) rank in that system's full worldwide list
 // name, us, the, qs, cwur, arwu
-const RAW = {
+const RAW_GLOBAL = {
   MIT:          [2,2,1,2,3],
   Harvard:      [1,5,5,1,1],
   Stanford:     [3,5,3,3,2],
@@ -595,6 +630,42 @@ const RAW = {
   OhioState:    [61,108,190,58,93]
 };
 
+// US VIEW: each system filtered to US universities only, then re-numbered 1..31
+// name, us, the, qs, cwur, arwu  (position among the 31 US schools tracked in this analysis)
+const RAW_US = {
+  MIT:          [2,1,1,2,3],
+  Harvard:      [1,3,3,1,1],
+  Stanford:     [3,4,2,3,2],
+  Berkeley:     [4,6,8,10,4],
+  Princeton:    [10,2,11,4,5],
+  Yale:         [5,7,9,7,9],
+  Caltech:      [14,5,4,9,7],
+  Penn:         [12,8,6,5,11],
+  Chicago:      [17,9,5,8,8],
+  Cornell:      [9,11,7,11,10],
+  JHU:          [11,10,10,15,14],
+  Columbia:     [6,13,12,6,6],
+  UCLA:         [7,12,15,14,12],
+  Michigan:     [13,14,14,13,17],
+  Northwestern: [16,18,13,12,18],
+  Washington:   [8,16,23,19,13],
+  NYU:          [19,19,17,18,16],
+  UCSD:         [15,22,19,21,15],
+  Duke:         [18,17,18,16,21],
+  UTAustin:     [21,23,20,22,22],
+  UIUC:         [28,21,22,17,23],
+  Wisconsin:    [22,24,27,20,19],
+  UNC:          [20,28,29,23,20],
+  USC:          [24,26,30,24,24],
+  BostonU:      [27,27,25,31,26],
+  PennState:    [25,31,24,25,29],
+  Brown:        [30,25,21,28,27],
+  GeorgiaTech:  [26,20,28,29,31],
+  Purdue:       [31,29,26,27,30],
+  OhioState:    [23,30,31,26,25],
+  CMU:          [29,15,16,30,28]
+};
+
 const DISPLAY_NAME = {
   MIT:"MIT", Harvard:"Harvard", Stanford:"Stanford", Berkeley:"UC Berkeley",
   Princeton:"Princeton", Yale:"Yale", Caltech:"Caltech", Penn:"University of Pennsylvania",
@@ -604,9 +675,10 @@ const DISPLAY_NAME = {
   Duke:"Duke", UTAustin:"UT Austin", UIUC:"UIUC",
   Wisconsin:"University of Wisconsin", UNC:"UNC Chapel Hill", USC:"University of Southern California",
   BostonU:"Boston University", PennState:"Penn State", Brown:"Brown",
-  GeorgiaTech:"Georgia Tech", Purdue:"Purdue", OhioState:"Ohio State"
+  GeorgiaTech:"Georgia Tech", Purdue:"Purdue", OhioState:"Ohio State", CMU:"Carnegie Mellon"
 };
 
+// GLOBAL VIEW: these schools' ARWU absolute rank is only published as a band; table shows the band string
 const ARWU_BAND_DISPLAY = {
   PennState: "101–150*",
   Brown: "101–150*",
@@ -614,13 +686,16 @@ const ARWU_BAND_DISPLAY = {
   Purdue: "101–150*"
 };
 
-function score(key){
-  const r = RAW[key];
+// US VIEW: same underlying schools, but here we show a numeric relative rank (from the band midpoint) with an asterisk
+const ARWU_ESTIMATED = new Set(["PennState","Brown","GeorgiaTech","Purdue","CMU"]);
+
+function score(key, raw){
+  const r = raw[key];
   return (r[0]+r[1]+r[2]+r[3]+r[4])/5;
 }
 
-function buildRows(keys){
-  const withScores = keys.map(k => ({ key:k, s: score(k) }));
+function buildRows(keys, raw){
+  const withScores = keys.map(k => ({ key:k, s: score(k, raw) }));
   withScores.sort((a,b) => a.s - b.s);
   let rows = [];
   let rank = 1;
@@ -637,17 +712,23 @@ function buildRows(keys){
   return rows;
 }
 
-function renderTable(keys, championKeys){
-  const rows = buildRows(keys);
+function renderTable(keys, championKeys, raw, view){
+  const rows = buildRows(keys, raw);
   const tbody = document.getElementById('results-tbody');
   tbody.innerHTML = rows.map(row => {
     const k = row.key;
     const b = BADGES[k];
-    const r = RAW[k];
+    const r = raw[k];
     const champ = championKeys.includes(k) ? ' champion' : '';
     const rankLabel = row.tie ? ('='+row.rank) : row.rank;
-    const arwuCell = ARWU_BAND_DISPLAY[k] ? ARWU_BAND_DISPLAY[k] : r[4];
-    const scoreDisplay = ARWU_BAND_DISPLAY[k] ? row.s.toFixed(1)+'*' : row.s.toFixed(1);
+    let arwuCell, scoreDisplay;
+    if(view === 'global'){
+      arwuCell = ARWU_BAND_DISPLAY[k] ? ARWU_BAND_DISPLAY[k] : r[4];
+      scoreDisplay = ARWU_BAND_DISPLAY[k] ? row.s.toFixed(1)+'*' : row.s.toFixed(1);
+    } else {
+      arwuCell = ARWU_ESTIMATED.has(k) ? r[4]+'*' : r[4];
+      scoreDisplay = ARWU_ESTIMATED.has(k) ? row.s.toFixed(1)+'*' : row.s.toFixed(1);
+    }
     return `<tr class="${champ.trim()}">
       <td class="rank-badge">${rankLabel}</td>
       <td><div class="badge-row"><span class="school-badge" style="background:${b.color}">${b.text}</span><span class="school-name">${DISPLAY_NAME[k]}</span></div></td>
@@ -657,7 +738,7 @@ function renderTable(keys, championKeys){
   }).join('');
 }
 
-const TABS = {
+const TABS_GLOBAL = {
   10: {
     keys: ["MIT","Harvard","Stanford"],
     champions: ["MIT","Harvard","Stanford"],
@@ -799,10 +880,190 @@ const TABS = {
     ]
   }
 };
+const ALL_31 = ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Columbia","Chicago","Cornell","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","CMU","UNC","USC","Brown","PennState","GeorgiaTech","OhioState","BostonU","Purdue"];
+
+const SATURATION_NOTE = `<div class="near-note">Under the US-relative methodology, no school in this analysis has a relative position worse than 31st on any system — so every cutoff from here up shows the <strong>same 31 schools</strong>. A genuinely wider net (finding the 32nd, 50th, or 100th most consistent US school) would require researching a much larger pool of smaller regional and state universities than this analysis covers. Treat Top 50 through Top 200 as "every US school checked in this analysis," not as an exhaustive list of all US universities that would qualify at that width.</div>`;
+
+const SATURATION_CAVEATS = [
+  "This report currently tracks 31 US universities across all five systems — the same candidate pool assembled in the original (global-rank) edition of this report. All 31 already clear a US-relative cutoff of 30, so Top 50 through Top 200 are identical to each other here.",
+  "This is a real limitation, not a rounding artifact: extending this cutoff meaningfully would mean researching dozens more US institutions per system — a substantially larger data-collection pass than this edition covers.",
+  "The Top 10 through Top 30 tabs are unaffected by this — those cutoffs draw real, meaningful distinctions within the current 31-school pool."
+];
+
+const TABS_US = {
+  10: {
+    keys: ["MIT","Harvard","Stanford","Berkeley","Yale"],
+    champions: ["MIT","Harvard","Stanford"],
+    diagramLabel: "TOP 10",
+    diagramCaption: "Each petal is one system's US-only ranking. Five schools rank in the top 10 among US universities on every single system at once.",
+    approachCutoff: "10th",
+    resultsHeading: "5 schools clear the bar",
+    nearHeading: "Three schools miss by exactly one position",
+    nearSub: "This is the tightest possible near-miss margin — each of these three is one US-relative spot away from qualifying, on a different system each time.",
+    nearHTML: `<div class="near-grid">
+      <div class="near-card"><h3>Princeton</h3><div class="miss">11th among US schools on QS</div><p>2nd on THE, 4th on CWUR, 5th on ARWU among US universities. Misses by a single position, and only on QS.</p></div>
+      <div class="near-card"><h3>Cornell</h3><div class="miss">11th among US schools on THE and CWUR</div><p>9th on US News, 7th on QS among US universities. Two systems place it 11th — one spot outside this cutoff.</p></div>
+      <div class="near-card"><h3>Penn</h3><div class="miss">11th among US schools on US News and ARWU</div><p>8th on THE, 6th on QS among US universities. Like Cornell, misses by exactly one position, just on a different pair of systems.</p></div>
+    </div>`,
+    caveats: [
+      "Under the US-relative approach, Berkeley and Yale newly qualify at this tightest cutoff — something that never happens in the original global-rank edition, where non-US schools (Oxford, ETH, Imperial, NUS...) occupy enough of the world's top-10 slots to push both out.",
+      "The margin at this cutoff is unusually tight: three different schools (Princeton, Cornell, Penn) each miss by exactly one US-relative position, each on a different system."
+    ]
+  },
+  20: {
+    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Columbia","Chicago","Cornell","JHU","UCLA","Michigan","Northwestern","NYU"],
+    champions: ["MIT","Harvard","Stanford"],
+    diagramLabel: "TOP 20",
+    diagramCaption: "Each petal is one system's US-only ranking. Sixteen schools rank in the US top 20 on every system at once.",
+    approachCutoff: "20th",
+    resultsHeading: "16 schools clear the bar",
+    nearHeading: "Close, but not quite",
+    nearSub: "These four schools are held back by their US-relative QS or ARWU position specifically, even though every other system places them comfortably inside the cutoff.",
+    nearHTML: `<div class="near-grid">
+      <div class="near-card"><h3>Duke</h3><div class="miss">21st among US schools on ARWU</div><p>Top 18 among US schools on the other four. Misses by a single US-relative position, on ARWU alone.</p></div>
+      <div class="near-card"><h3>UC San Diego</h3><div class="miss">22nd on THE, 21st on CWUR (US-relative)</div><p>15th on US News among US schools. Two systems place it just past the cutoff.</p></div>
+      <div class="near-card"><h3>University of Washington</h3><div class="miss">23rd among US schools on QS</div><p>8th on US News among US schools — one of the largest gaps between a school's best and worst US-relative position in this dataset.</p></div>
+      <div class="near-card"><h3>UT Austin</h3><div class="miss">23rd among US schools on THE and ARWU</div><p>20th on QS among US schools. Consistently just outside on two systems rather than comfortably inside on most.</p></div>
+    </div>`,
+    caveats: [
+      "Under the US-relative approach, this is a notably larger group than the original edition's top-20 tab (6 schools) — filtering out international competition opens up meaningfully more room for US schools to co-exist inside a top-20 US-relative bar.",
+      "Washington is the most dramatic example of why this matters: 8th among US schools on US News, but 23rd among US schools on QS — a 15-position swing driven entirely by QS's reputation-survey weighting."
+    ]
+  },
+  25: {
+    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Columbia","Chicago","Cornell","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin"],
+    champions: ["MIT","Harvard","Stanford"],
+    diagramLabel: "TOP 25",
+    diagramCaption: "Each petal is one system's US-only ranking. Twenty schools rank in the US top 25 on every system at once.",
+    approachCutoff: "25th",
+    resultsHeading: "20 schools clear the bar",
+    nearHeading: "Two schools right at the edge",
+    nearSub: "Both of these miss by just two or three US-relative positions on a single system.",
+    nearHTML: `<div class="near-grid">
+      <div class="near-card"><h3>University of Wisconsin</h3><div class="miss">27th among US schools on QS</div><p>Top 24 among US schools on the other four. QS is the sole reason it misses this cutoff.</p></div>
+      <div class="near-card"><h3>UIUC</h3><div class="miss">28th among US schools on US News</div><p>Top 23 among US schools on the other four. The furthest-out near-miss at this cutoff, but still on just one system.</p></div>
+    </div>`,
+    caveats: [
+      "Every school that qualifies here does so cleanly — no ties sit exactly at the boundary the way they do in the Top 10 tab.",
+      "Wisconsin and UIUC are both one-system misses, unlike some of the multi-system misses seen in the Top 20 tab — a sign the pool is thinning out at a fairly steady rate rather than clustering."
+    ]
+  },
+  30: {
+    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Columbia","Chicago","Cornell","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","CMU","UNC","USC","Brown"],
+    champions: ["MIT","Harvard","Stanford"],
+    diagramLabel: "TOP 30",
+    diagramCaption: "Each petal is one system's US-only ranking. Twenty-six of the 31 US schools tracked in this analysis rank in the US top 30 on every system at once.",
+    approachCutoff: "30th",
+    resultsHeading: "26 schools clear the bar",
+    nearHeading: "Five schools miss by exactly one position — on five different systems",
+    nearSub: "This is the most dramatic near-miss cluster in the entire report: every excluded school misses by the smallest possible margin, and no two miss on the same system.",
+    nearHTML: `<div class="near-grid">
+      <div class="near-card"><h3>Georgia Tech</h3><div class="miss">31st among US schools on ARWU</div><p>Top 28 among US schools everywhere else. Misses by one position, on ARWU alone.</p></div>
+      <div class="near-card"><h3>Boston University</h3><div class="miss">31st among US schools on CWUR</div><p>Top 27 among US schools everywhere else. The only system holding it back.</p></div>
+      <div class="near-card"><h3>Ohio State</h3><div class="miss">31st among US schools on THE and QS</div><p>Top 26 among US schools on the other three. The only school missing on two systems in this group, but both misses are by exactly one position.</p></div>
+      <div class="near-card"><h3>Purdue</h3><div class="miss">31st among US schools on US News</div><p>Top 29 among US schools everywhere else. Misses by one position, on US News alone.</p></div>
+    </div>`,
+    caveats: [
+      "This is the standout finding of the US-relative edition: five schools — Georgia Tech, Boston University, Ohio State, and Purdue — each miss the Top 30 cutoff by exactly one US-relative position, and (except Ohio State) each misses on a different single system.",
+      "26 of the 31 schools in this analysis's candidate pool clear a US-relative Top 30 bar — a much higher clearance rate than the original global-rank edition, where only 11 of the same broader pool cleared an equivalent Top 25-30 bar.",
+      "Since every school in this analysis's pool has a worst US-relative position of 31 or better, this is effectively the last cutoff where the qualifying set keeps changing — see the note on the wider tabs below."
+    ]
+  },
+  50: {
+    keys: ALL_31,
+    champions: ["MIT","Harvard","Stanford"],
+    diagramLabel: "TOP 50",
+    diagramCaption: "Each petal is one system's US-only ranking. All 31 schools tracked in this analysis clear a US-relative top-50 bar.",
+    approachCutoff: "50th",
+    resultsHeading: "31 schools clear the bar",
+    nearHeading: "Why this looks the same as Top 100–200",
+    nearSub: "",
+    nearHTML: SATURATION_NOTE,
+    caveats: SATURATION_CAVEATS
+  },
+  100: {
+    keys: ALL_31,
+    champions: ["MIT","Harvard","Stanford"],
+    diagramLabel: "TOP 100",
+    diagramCaption: "Each petal is one system's US-only ranking. All 31 schools tracked in this analysis clear a US-relative top-100 bar.",
+    approachCutoff: "100th",
+    resultsHeading: "31 schools clear the bar",
+    nearHeading: "Why this looks the same as Top 50 and Top 150–200",
+    nearSub: "",
+    nearHTML: SATURATION_NOTE,
+    caveats: SATURATION_CAVEATS
+  },
+  150: {
+    keys: ALL_31,
+    champions: ["MIT","Harvard","Stanford"],
+    diagramLabel: "TOP 150",
+    diagramCaption: "Each petal is one system's US-only ranking. All 31 schools tracked in this analysis clear a US-relative top-150 bar.",
+    approachCutoff: "150th",
+    resultsHeading: "31 schools clear the bar",
+    nearHeading: "Why this looks the same as Top 50–100 and Top 200",
+    nearSub: "",
+    nearHTML: SATURATION_NOTE,
+    caveats: SATURATION_CAVEATS
+  },
+  200: {
+    keys: ALL_31,
+    champions: ["MIT","Harvard","Stanford"],
+    diagramLabel: "TOP 200",
+    diagramCaption: "Each petal is one system's US-only ranking. All 31 schools tracked in this analysis clear a US-relative top-200 bar.",
+    approachCutoff: "200th",
+    resultsHeading: "31 schools clear the bar",
+    nearHeading: "Why this looks the same as Top 50–150",
+    nearSub: "",
+    nearHTML: SATURATION_NOTE,
+    caveats: SATURATION_CAVEATS
+  }
+};
+
+const VIEW_META = {
+  global: {
+    heroTitle: `Which colleges survive <em>every</em> ranking lens — not just one.`,
+    heroSub: `Five major global ranking systems disagree constantly, because each rewards a different definition of excellence. This report finds the US universities that place consistently across <strong>all five</strong> — QS, THE, ARWU, CWUR, and US News — at once. Pick a cutoff below to see how the qualifying set changes.`,
+    approachHTML: `<p><strong>The filter:</strong> take a school's rank in each of the five systems' most recent edition, and keep only the schools that place <strong><span id="approach-cutoff-text">25th</span> or better in every single one</strong>. Excelling in three out of five doesn't count.</p>
+        <p><strong>The score:</strong> for the schools that clear the bar, rank them by the simple average of their five positions — a lower number means the school is consistently near the very top, not just consistently qualifying.</p>
+        <div class="formula">consensus_score = ( US News + THE + QS + CWUR + ARWU ) / 5</div>
+        <p>This rewards <em>robustness</em> over <em>peak performance</em>. A school that's 1st in one system and 60th in another never qualifies, no matter how impressive that first-place finish looks in isolation.</p>`,
+    resultsNote: `Sorted by consensus score. All figures verified directly against each publisher's own current release. No estimates unless marked *.`,
+    headerRow: `<th>#</th><th>University</th><th class="num">US&nbsp;News</th><th class="num">THE</th><th class="num">QS</th><th class="num">CWUR</th><th class="num">ARWU</th><th class="num">Score</th>`,
+    raw: RAW_GLOBAL,
+    tabs: TABS_GLOBAL
+  },
+  us: {
+    heroTitle: `Ranked against <em>each other</em>, not against the whole world.`,
+    heroSub: `The Global View compares US schools to every university on Earth — which means a US school's position is partly a function of how many international universities (Oxford, ETH, NUS, Imperial...) happen to sit above it. This view removes that noise: each ranking system is filtered to <strong>US universities only</strong>, re-numbered 1 through N, and <em>that</em> position is what's compared across all five systems.`,
+    approachHTML: `<p><strong>The re-ranking step (what's different in this view):</strong> for each of the five systems, discard every non-US university from its list, then re-number the remaining US schools sequentially — 1st, 2nd, 3rd... — based purely on where they fell relative to <em>each other</em>. A school's global rank of 46th on QS might become 15th once only US schools are counted.</p>
+        <p><strong>The filter:</strong> keep only the schools that place <strong><span id="approach-cutoff-text">25th</span> or better among US schools, in every single one</strong> of the five systems. Excelling in three out of five doesn't count.</p>
+        <p><strong>The score:</strong> for the schools that clear the bar, rank them by the simple average of their five US-relative positions — a lower number means the school is consistently near the top of the US pack, not just consistently qualifying.</p>
+        <div class="formula">consensus_score = ( US_rel + THE_rel + QS_rel + CWUR_rel + ARWU_rel ) / 5</div>
+        <p>This isolates the question "how does this school compare to other US schools?" from "how does it compare to the entire world?" — two related but genuinely different questions that the Global View conflates.</p>`,
+    resultsNote: `Figures below are each school's rank <strong>among US universities only</strong> in that system — not its global rank. Sorted by consensus score. No estimates unless marked *.`,
+    headerRow: `<th>#</th><th>University</th><th class="num">US&nbsp;News<br><span style="font-weight:400;text-transform:none;">(US&nbsp;rank)</span></th><th class="num">THE<br><span style="font-weight:400;text-transform:none;">(US&nbsp;rank)</span></th><th class="num">QS<br><span style="font-weight:400;text-transform:none;">(US&nbsp;rank)</span></th><th class="num">CWUR<br><span style="font-weight:400;text-transform:none;">(US&nbsp;rank)</span></th><th class="num">ARWU<br><span style="font-weight:400;text-transform:none;">(US&nbsp;rank)</span></th><th class="num">Score</th>`,
+    raw: RAW_US,
+    tabs: TABS_US
+  }
+};
+
+let currentView = 'global';
+let currentCutoff = 20;
+
+function applyViewMeta(view){
+  const m = VIEW_META[view];
+  document.getElementById('hero-title').innerHTML = m.heroTitle;
+  document.getElementById('hero-sub-text').innerHTML = m.heroSub;
+  document.getElementById('approach-body-content').innerHTML = m.approachHTML;
+  document.getElementById('results-note-text').innerHTML = m.resultsNote;
+  document.getElementById('table-head-row').innerHTML = m.headerRow;
+}
 
 function renderTab(n){
-  const t = TABS[n];
-  renderTable(t.keys, t.champions);
+  currentCutoff = n;
+  const meta = VIEW_META[currentView];
+  const t = meta.tabs[n];
+  renderTable(t.keys, t.champions, meta.raw, currentView);
   document.getElementById('diagram-cutoff-label').textContent = t.diagramLabel;
   document.getElementById('diagram-caption').textContent = t.diagramCaption;
   document.getElementById('approach-cutoff-text').textContent = t.approachCutoff;
@@ -819,10 +1080,26 @@ function renderTab(n){
   });
 }
 
+function switchView(view){
+  currentView = view;
+  document.querySelectorAll('.view-btn').forEach(btn => {
+    const active = btn.getAttribute('data-view') === view;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+  applyViewMeta(view);
+  renderTab(currentCutoff);
+}
+
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => renderTab(btn.getAttribute('data-tab')));
 });
 
+document.querySelectorAll('.view-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchView(btn.getAttribute('data-view')));
+});
+
+applyViewMeta('global');
 renderTab(20);
 </script>
 
