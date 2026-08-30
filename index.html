@@ -525,7 +525,7 @@
         <div class="petal-legend">
           <span><span class="dot" style="background:var(--qs)"></span>QS World University Rankings (2026)</span>
           <span><span class="dot" style="background:var(--the)"></span>Times Higher Education (2026)</span>
-          <span><span class="dot" style="background:var(--arwu)"></span>ARWU / Shanghai Ranking (2025)</span>
+          <span><span class="dot" style="background:var(--arwu)"></span>ARWU / Shanghai Ranking (2026)</span>
           <span><span class="dot" style="background:var(--cwur)"></span>CWUR Global 2000 (2026)</span>
           <span><span class="dot" style="background:var(--usn)"></span>US News Best Global (2026–27)</span>
         </div>
@@ -576,7 +576,7 @@
 
 <footer>
   <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:12px;">
-    <p>Sources: QS World University Rankings 2026 · THE World University Rankings 2026 · ARWU / ShanghaiRanking 2025 · CWUR Global 2000, 2026 · US News Best Global Universities 2026–27</p>
+    <p>Sources: QS World University Rankings 2026 · THE World University Rankings 2026 · ARWU / ShanghaiRanking 2026 · CWUR Global 2000, 2026 · US News Best Global Universities 2026–27</p>
     <p>Global View ranks against all universities worldwide · US View re-ranks among US institutions only · Compiled August 2026</p>
   </div>
 </footer>
@@ -623,32 +623,33 @@ const RAW_GLOBAL = {
   Harvard:      [1,5,5,1,1],
   Stanford:     [3,5,3,3,2],
   Berkeley:     [7,9,17,12,5],
-  Princeton:    [14,3,25,6,7],
+  Princeton:    [14,3,25,6,6],
   Yale:         [8,10,21,9,11],
-  Caltech:      [23,7,10,11,9],
+  Caltech:      [23,7,10,11,10],
   Penn:         [17,14,15,7,14],
-  Chicago:      [25,15,13,10,10],
+  Chicago:      [25,15,13,10,9],
   Cornell:      [13,18,16,14,12],
-  JHU:          [17,16,24,18,19],
+  JHU:          [17,16,24,18,23],
   Columbia:     [10,20,38,8,8],
-  UCLA:         [11,18,46,17,16],
-  Michigan:     [21,23,45,16,33],
-  Northwestern: [24,30,42,15,33],
-  Washington:   [12,25,81,25,17],
-  NYU:          [36,31,55,24,28],
+  UCLA:         [11,18,46,17,14],
+  Michigan:     [21,23,45,16,35],
+  Northwestern: [24,30,42,15,31],
+  Washington:   [12,25,81,25,16],
+  NYU:          [36,31,55,24,26],
   UCSD:         [23,47,66,34,20],
-  Duke:         [30,28,62,21,46],
-  UTAustin:     [56,50,68,35,49],
-  UIUC:         [98,41,70,22,53],
-  Wisconsin:    [60,53,110,29,36],
-  UNC:          [55,78,140,43,39],
+  Duke:         [30,28,62,21,48],
+  UTAustin:     [56,50,68,35,47],
+  UIUC:         [98,41,70,22,46],
+  Wisconsin:    [60,53,110,29,35],
+  UNC:          [55,78,140,43,40],
   USC:          [77,73,146,55,68],
-  BostonU:      [96,76,88,101,101],
+  BostonU:      [96,76,88,101,125],
   PennState:    [91,108,82,57,125],
   Brown:        [144,65,69,72,125],
   GeorgiaTech:  [94,41,123,74,175],
-  Purdue:       [152,85,88,68,125],
-  OhioState:    [61,108,190,58,93]
+  Purdue:       [152,85,88,68,100],
+  OhioState:    [61,108,190,58,93],
+  CMU:          [112,24,52,94,125]
 };
 
 // US VIEW: each system filtered to US universities only, then re-numbered 1..31
@@ -660,31 +661,31 @@ const RAW_US = {
   Berkeley:     [4,6,8,10,4],
   Princeton:    [10,2,11,4,5],
   Yale:         [5,7,9,7,9],
-  Caltech:      [14,5,4,9,7],
+  Caltech:      [14,5,4,9,8],
   Penn:         [12,8,6,5,11],
-  Chicago:      [17,9,5,8,8],
+  Chicago:      [17,9,5,8,7],
   Cornell:      [9,11,7,11,10],
-  JHU:          [11,10,10,15,14],
+  JHU:          [11,10,10,15,15],
   Columbia:     [6,13,12,6,6],
   UCLA:         [7,12,15,14,12],
-  Michigan:     [13,14,14,13,17],
-  Northwestern: [16,18,13,12,18],
+  Michigan:     [13,14,14,13,18],
+  Northwestern: [16,18,13,12,17],
   Washington:   [8,16,23,19,13],
   NYU:          [19,19,17,18,16],
-  UCSD:         [15,22,19,21,15],
-  Duke:         [18,17,18,16,21],
+  UCSD:         [15,22,19,21,14],
+  Duke:         [18,17,18,16,23],
   UTAustin:     [21,23,20,22,22],
-  UIUC:         [28,21,22,17,23],
+  UIUC:         [28,21,22,17,21],
   Wisconsin:    [22,24,27,20,19],
   UNC:          [20,28,29,23,20],
   USC:          [24,26,30,24,24],
-  BostonU:      [27,27,25,31,26],
-  PennState:    [25,31,24,25,29],
-  Brown:        [30,25,21,28,27],
+  BostonU:      [27,27,25,31,27],
+  PennState:    [25,31,24,25,30],
+  Brown:        [30,25,21,28,28],
   GeorgiaTech:  [26,20,28,29,31],
-  Purdue:       [31,29,26,27,30],
+  Purdue:       [31,29,26,27,26],
   OhioState:    [23,30,31,26,25],
-  CMU:          [29,15,16,30,28]
+  CMU:          [29,15,16,30,29]
 };
 
 const DISPLAY_NAME = {
@@ -704,11 +705,12 @@ const ARWU_BAND_DISPLAY = {
   PennState: "101–150*",
   Brown: "101–150*",
   GeorgiaTech: "151–200*",
-  Purdue: "101–150*"
+  BostonU: "101–150*",
+  CMU: "101–150*"
 };
 
 // US VIEW: same underlying schools, but here we show a numeric relative rank (from the band midpoint) with an asterisk
-const ARWU_ESTIMATED = new Set(["PennState","Brown","GeorgiaTech","Purdue","CMU"]);
+const ARWU_ESTIMATED = new Set(["PennState","Brown","GeorgiaTech","BostonU","CMU"]);
 
 function score(key, raw){
   const r = raw[key];
@@ -869,35 +871,35 @@ const TABS_GLOBAL = {
     ]
   },
   150: {
-    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","UNC","USC","BostonU","PennState","Brown"],
+    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","UNC","USC","BostonU","PennState","Brown","CMU"],
     champions: ["MIT","Harvard","Stanford"],
     diagramLabel: "TOP 150",
-    diagramCaption: "Each petal is one ranking system's own top-150 club. Twenty-seven schools sit inside every petal at once — the intersection is the consensus set.",
+    diagramCaption: "Each petal is one ranking system's own top-150 club. Twenty-eight schools sit inside every petal at once — the intersection is the consensus set.",
     approachCutoff: "150th",
-    resultsHeading: "27 schools clear the bar",
+    resultsHeading: "28 schools clear the bar",
     nearHeading: "Two more that look plausible, but don't quite make it",
-    nearSub: "Purdue and Georgia Tech are the next-closest candidates at this cutoff — one misses on a hard number, the other on a genuine data gap.",
-    nearHTML: `<div class="near-note"><strong>Purdue</strong> clears QS (88), THE (85), and CWUR (68) comfortably, and its ARWU position is inside the 101-150 band — but its US News figure is 152 (by one source) or 173 (by another), both just past the line. Either way, it misses. <strong>Georgia Tech</strong> clears US News (94), THE (41), and QS (123), but its current ARWU position couldn't be pinned down: its most recent confirmed figure (151, from 2022) sits right at the boundary, and no more current exact or banded figure was available this pass. Rather than guess, it's left out.</div>`,
+    nearSub: "Purdue and Georgia Tech are the next-closest candidates at this cutoff — one misses on a hard number, the other on a genuine band boundary.",
+    nearHTML: `<div class="near-note"><strong>Purdue</strong> clears QS (88), THE (85), CWUR (68), and ARWU (100, now an exact figure) comfortably — but its US News figure is 152 (by one source) or 173 (by another), both just past the line. Either way, it misses. <strong>Georgia Tech</strong> clears US News (94), THE (41), and QS (123), but its ARWU position is confirmed at 151-200 — even the best case in that band (151) sits one spot outside this cutoff, so it's excluded on a real boundary, not a data gap.</div>`,
     caveats: [
-      "Penn State and Brown are included with a caveat: ShanghaiRanking only publishes their ARWU position as a band (101-150), not an exact number, for either school. Since even the worst case in that band (150) still clears this cutoff, both are counted as qualifying — but their consensus scores (marked with *) use the band's midpoint (125) as a stand-in for the real figure, which is somewhere in that range.",
-      "This is the widest cut in the report, and the one most exposed to ARWU's own reporting limits: several schools just outside this list (Georgia Tech, Purdue) are only a handful of positions away, but couldn't be confirmed with full precision this pass.",
-      "27 schools, not 30 — the earlier estimate assumed a few more schools bunched near 140-150 than turned out to be verifiable. Purdue and Georgia Tech were the two best candidates to close the gap, and both had to be excluded for the reasons above."
+      "Penn State, Brown, and Carnegie Mellon are included with a caveat: ShanghaiRanking only publishes their ARWU position as a band (101-150), not an exact number, for any of the three. Since even the worst case in that band (150) still clears this cutoff, all three are counted as qualifying — but their consensus scores (marked with *) use the band's midpoint (125) as a stand-in for the real figure.",
+      "Boston University moved into this same banded group this cycle — its ARWU position was an exact 101st last edition, but ShanghaiRanking now reports it only as 101-150 for 2026. Since the whole band still clears 150, it remains a qualifier, now with the same asterisk treatment as Penn State, Brown, and CMU.",
+      "Purdue moved the other way: its ARWU position is now an exact 100th (up from a 101-150 band last cycle) — one of the clearest single-school swings in this year's refresh. It still doesn't qualify here, but purely on its US News figure, unrelated to ARWU."
     ]
   },
   200: {
-    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","UNC","USC","BostonU","PennState","Brown","GeorgiaTech","OhioState","Purdue"],
+    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","UNC","USC","BostonU","PennState","Brown","GeorgiaTech","OhioState","Purdue","CMU"],
     champions: ["MIT","Harvard","Stanford"],
     diagramLabel: "TOP 200",
-    diagramCaption: "Each petal is one ranking system's own top-200 club. Thirty schools sit inside every petal at once — the intersection is the consensus set.",
+    diagramCaption: "Each petal is one ranking system's own top-200 club. Thirty-one schools sit inside every petal at once — the intersection is the consensus set.",
     approachCutoff: "200th",
-    resultsHeading: "30 schools clear the bar",
+    resultsHeading: "31 schools clear the bar",
     nearHeading: "The schools that resolved cleanly at this wider cutoff",
-    nearSub: "Loosening from 150 to 200 doesn't just add new schools — it settles two fence-sitters from the previous tab and adds one more.",
-    nearHTML: `<div class="near-note"><strong>Georgia Tech</strong> is now confirmed: ShanghaiRanking places it in the 151-200 ARWU band directly, resolving the ambiguity from the Top 150 tab. <strong>Purdue</strong> now qualifies outright — its US News figure (152 or 173, depending on source) is comfortably under 200 either way, so the earlier discrepancy no longer matters. <strong>Ohio State</strong> is a clean new entrant, with an exact ARWU figure (93rd) rather than a band, plus solid marks across the other four systems. Rice and the University of Maryland were checked and do not qualify: Rice's US News figure (201 or 219, depending on source) and Maryland's QS figure (207) both land just past 200.</div>`,
+    nearSub: "Loosening from 150 to 200 doesn't just add new schools — it settles the fence-sitters from the previous tab.",
+    nearHTML: `<div class="near-note"><strong>Georgia Tech</strong> now qualifies: its confirmed 151-200 ARWU band fits entirely within this wider cutoff. <strong>Purdue</strong> now qualifies outright — its US News figure (152 or 173, depending on source) is comfortably under 200 either way, so the earlier discrepancy no longer matters. <strong>Ohio State</strong> is a clean entrant, with an exact ARWU figure (93rd) rather than a band, plus solid marks across the other four systems. Rice and the University of Maryland were checked and do not qualify: Rice's US News figure (201 or 219, depending on source) and Maryland's QS figure (207) both land just past 200.</div>`,
     caveats: [
       "This is the widest cutoff in the report, and ARWU's own reporting granularity becomes the practical limit past this point: its bands widen from 50-rank increments (101-150, 151-200) to 100-rank increments (201-300, 301-400) beyond 200, making a top-250 or top-300 cut much harder to verify with precision.",
-      "Penn State, Brown, and Purdue still carry the ARWU band-estimate caveat from the Top 150 tab (marked with *) — their scores use the band midpoint since ShanghaiRanking doesn't publish an exact figure for them.",
-      "Georgia Tech's ARWU figure (151-200 band) was confirmed directly from ShanghaiRanking's own site this pass, resolving what was an open question in the Top 150 tab — it wasn't a new data point, just a firmer read on an existing one."
+      "Penn State, Brown, Boston University, and Carnegie Mellon still carry the ARWU band-estimate caveat (marked with *) — their scores use the band midpoint since ShanghaiRanking doesn't publish an exact figure for any of them this cycle.",
+      "31 schools, all confirmed — every school in this analysis's candidate pool now clears the top-200 bar under the refreshed ARWU 2026 data."
     ]
   }
 };
