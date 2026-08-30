@@ -525,7 +525,7 @@
         <div class="petal-legend">
           <span><span class="dot" style="background:var(--qs)"></span>QS 世界大学排名(2026)</span>
           <span><span class="dot" style="background:var(--the)"></span>泰晤士高等教育排名(2026)</span>
-          <span><span class="dot" style="background:var(--arwu)"></span>ARWU / 上海软科排名(2025)</span>
+          <span><span class="dot" style="background:var(--arwu)"></span>ARWU / 上海软科排名(2026)</span>
           <span><span class="dot" style="background:var(--cwur)"></span>CWUR 世界大学排名(2026)</span>
           <span><span class="dot" style="background:var(--usn)"></span>US News 全球最佳大学(2026–27)</span>
         </div>
@@ -576,7 +576,7 @@
 
 <footer>
   <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:12px;">
-    <p>数据来源:QS 世界大学排名 2026 · 泰晤士高等教育世界大学排名 2026 · ARWU / 上海软科排名 2025 · CWUR 世界大学排名 2026 · US News 全球最佳大学排名 2026–27</p>
+    <p>数据来源:QS 世界大学排名 2026 · 泰晤士高等教育世界大学排名 2026 · ARWU / 上海软科排名 2026 · CWUR 世界大学排名 2026 · US News 全球最佳大学排名 2026–27</p>
     <p>全球视角:与世界所有大学比较 · 美国内部视角:仅在美国院校内部重新排序比较 · 编制于 2026 年 8 月</p>
   </div>
 </footer>
@@ -623,32 +623,33 @@ const RAW_GLOBAL = {
   Harvard:      [1,5,5,1,1],
   Stanford:     [3,5,3,3,2],
   Berkeley:     [7,9,17,12,5],
-  Princeton:    [14,3,25,6,7],
+  Princeton:    [14,3,25,6,6],
   Yale:         [8,10,21,9,11],
-  Caltech:      [23,7,10,11,9],
+  Caltech:      [23,7,10,11,10],
   Penn:         [17,14,15,7,14],
-  Chicago:      [25,15,13,10,10],
+  Chicago:      [25,15,13,10,9],
   Cornell:      [13,18,16,14,12],
-  JHU:          [17,16,24,18,19],
+  JHU:          [17,16,24,18,23],
   Columbia:     [10,20,38,8,8],
-  UCLA:         [11,18,46,17,16],
-  Michigan:     [21,23,45,16,33],
-  Northwestern: [24,30,42,15,33],
-  Washington:   [12,25,81,25,17],
-  NYU:          [36,31,55,24,28],
+  UCLA:         [11,18,46,17,14],
+  Michigan:     [21,23,45,16,35],
+  Northwestern: [24,30,42,15,31],
+  Washington:   [12,25,81,25,16],
+  NYU:          [36,31,55,24,26],
   UCSD:         [23,47,66,34,20],
-  Duke:         [30,28,62,21,46],
-  UTAustin:     [56,50,68,35,49],
-  UIUC:         [98,41,70,22,53],
-  Wisconsin:    [60,53,110,29,36],
-  UNC:          [55,78,140,43,39],
+  Duke:         [30,28,62,21,48],
+  UTAustin:     [56,50,68,35,47],
+  UIUC:         [98,41,70,22,46],
+  Wisconsin:    [60,53,110,29,35],
+  UNC:          [55,78,140,43,40],
   USC:          [77,73,146,55,68],
-  BostonU:      [96,76,88,101,101],
+  BostonU:      [96,76,88,101,125],
   PennState:    [91,108,82,57,125],
   Brown:        [144,65,69,72,125],
   GeorgiaTech:  [94,41,123,74,175],
-  Purdue:       [152,85,88,68,125],
-  OhioState:    [61,108,190,58,93]
+  Purdue:       [152,85,88,68,100],
+  OhioState:    [61,108,190,58,93],
+  CMU:          [112,24,52,94,125]
 };
 
 // US VIEW: each system filtered to US universities only, then re-numbered 1..31
@@ -660,31 +661,31 @@ const RAW_US = {
   Berkeley:     [4,6,8,10,4],
   Princeton:    [10,2,11,4,5],
   Yale:         [5,7,9,7,9],
-  Caltech:      [14,5,4,9,7],
+  Caltech:      [14,5,4,9,8],
   Penn:         [12,8,6,5,11],
-  Chicago:      [17,9,5,8,8],
+  Chicago:      [17,9,5,8,7],
   Cornell:      [9,11,7,11,10],
-  JHU:          [11,10,10,15,14],
+  JHU:          [11,10,10,15,15],
   Columbia:     [6,13,12,6,6],
   UCLA:         [7,12,15,14,12],
-  Michigan:     [13,14,14,13,17],
-  Northwestern: [16,18,13,12,18],
+  Michigan:     [13,14,14,13,18],
+  Northwestern: [16,18,13,12,17],
   Washington:   [8,16,23,19,13],
   NYU:          [19,19,17,18,16],
-  UCSD:         [15,22,19,21,15],
-  Duke:         [18,17,18,16,21],
+  UCSD:         [15,22,19,21,14],
+  Duke:         [18,17,18,16,23],
   UTAustin:     [21,23,20,22,22],
-  UIUC:         [28,21,22,17,23],
+  UIUC:         [28,21,22,17,21],
   Wisconsin:    [22,24,27,20,19],
   UNC:          [20,28,29,23,20],
   USC:          [24,26,30,24,24],
-  BostonU:      [27,27,25,31,26],
-  PennState:    [25,31,24,25,29],
-  Brown:        [30,25,21,28,27],
+  BostonU:      [27,27,25,31,27],
+  PennState:    [25,31,24,25,30],
+  Brown:        [30,25,21,28,28],
   GeorgiaTech:  [26,20,28,29,31],
-  Purdue:       [31,29,26,27,30],
+  Purdue:       [31,29,26,27,26],
   OhioState:    [23,30,31,26,25],
-  CMU:          [29,15,16,30,28]
+  CMU:          [29,15,16,30,29]
 };
 
 const DISPLAY_NAME = {
@@ -704,11 +705,12 @@ const ARWU_BAND_DISPLAY = {
   PennState: "101–150*",
   Brown: "101–150*",
   GeorgiaTech: "151–200*",
-  Purdue: "101–150*"
+  BostonU: "101–150*",
+  CMU: "101–150*"
 };
 
 // US VIEW: same underlying schools, but here we show a numeric relative rank (from the band midpoint) with an asterisk
-const ARWU_ESTIMATED = new Set(["PennState","Brown","GeorgiaTech","Purdue","CMU"]);
+const ARWU_ESTIMATED = new Set(["PennState","Brown","GeorgiaTech","BostonU","CMU"]);
 
 function score(key, raw){
   const r = raw[key];
@@ -869,35 +871,35 @@ const TABS_GLOBAL = {
     ]
   },
   150: {
-    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","UNC","USC","BostonU","PennState","Brown"],
+    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","UNC","USC","BostonU","PennState","Brown","CMU"],
     champions: ["MIT","Harvard","Stanford"],
     diagramLabel: "前 150 名",
-    diagramCaption: "每片花瓣代表一个排名系统自己的前150名俱乐部。共有27所学校同时落在每片花瓣之内——这个交集即为共识名单。",
+    diagramCaption: "每片花瓣代表一个排名系统自己的前150名俱乐部。共有28所学校同时落在每片花瓣之内——这个交集即为共识名单。",
     approachCutoff: "第150名",
-    resultsHeading: "共有 27 所学校通过筛选",
+    resultsHeading: "共有 28 所学校通过筛选",
     nearHeading: "另外两所看似有希望、但仍未达标的学校",
-    nearSub: "普渡大学和佐治亚理工学院是本档最接近达标的候选者——一个败给了一个确切数字,另一个则卡在真实的数据缺口上。",
-    nearHTML: `<div class="near-note"><strong>普渡大学</strong>在 QS(第88)、THE(第85)、CWUR(第68)上都轻松达标,其 ARWU 名次也落在101–150区间之内——但它的 US News 名次,一个来源显示为第152,另一个来源显示为第173,两者都刚好超出门槛。无论用哪个数字,它都未能达标。<strong>佐治亚理工学院</strong>在 US News(第94)、THE(第41)、QS(第123)上都已达标,但目前无法确定其确切的 ARWU 名次:最近一次可确认的数字(2022年的第151)正好卡在边界上,本轮也未能获取更新的确切数字或区间数据。与其猜测,不如暂不将其纳入。</div>`,
+    nearSub: "普渡大学和佐治亚理工学院是本档最接近达标的候选者——一个败给了一个确切数字,另一个则卡在真实的区间边界上。",
+    nearHTML: `<div class="near-note"><strong>普渡大学</strong>在 QS(第88)、THE(第85)、CWUR(第68)、ARWU(第100,现已是确切数字)上都轻松达标——但它的 US News 名次,一个来源显示为第152,另一个来源显示为第173,两者都刚好超出门槛。无论用哪个数字,它都未能达标。<strong>佐治亚理工学院</strong>在 US News(第94)、THE(第41)、QS(第123)上都已达标,但其 ARWU 名次已确认落在151–200区间——即便按该区间的最好情形(第151)计算,也刚好超出这个门槛一位,因此是卡在真实的区间边界上,而非数据缺口。</div>`,
     caveats: [
-      "宾夕法尼亚州立大学和布朗大学的入选附带一个说明:上海软科官方只公布了这两所学校的 ARWU 名次区间(101–150),并未给出确切数字。由于即便按该区间的最差情形(第150名)计算依然能通过这个门槛,两所学校仍被计入合格名单——但它们的共识得分(标注 *)使用该区间的中位数(125)作为真实数字的替代估算值。",
-      "这是本报告中最宽松的一档门槛,也是最容易受到 ARWU 自身数据公开精度限制影响的一档:名单之外还有几所学校(佐治亚理工学院、普渡大学)只差几个名次,但本轮未能获得足够精确的确认。",
-      "是27所学校,而非30所——此前的估计假设会有更多学校聚集在140至150名之间,但实际能够核实的数量并没有那么多。普渡大学和佐治亚理工学院是最有希望补齐差距的两个候选者,但基于以上原因,两者都不得不被排除在外。"
+      "宾夕法尼亚州立大学、布朗大学和卡内基梅隆大学的入选附带一个说明:上海软科官方只公布了这三所学校的 ARWU 名次区间(101–150),均未给出确切数字。由于即便按该区间的最差情形(第150名)计算依然能通过这个门槛,三所学校都被计入合格名单——但它们的共识得分(标注 *)使用该区间的中位数(125)作为真实数字的替代估算值。",
+      "波士顿大学本轮也加入了同样的区间估算行列——它的 ARWU 名次上一版是确切的第101名,但2026版上海软科只公布了101–150的区间。由于整个区间依然能通过150名的门槛,它仍被计入合格名单,现在与宾夕法尼亚州立大学、布朗大学、卡内基梅隆大学一样标注 *。",
+      "普渡大学则是反方向的变化:它的 ARWU 名次现已是确切的第100名(此前为101–150区间)——是本轮数据更新中变化最明显的个案之一。不过它在本档依然未能达标,原因纯粹在于 US News 名次,与 ARWU 无关。"
     ]
   },
   200: {
-    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","UNC","USC","BostonU","PennState","Brown","GeorgiaTech","OhioState","Purdue"],
+    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","UNC","USC","BostonU","PennState","Brown","GeorgiaTech","OhioState","Purdue","CMU"],
     champions: ["MIT","Harvard","Stanford"],
     diagramLabel: "前 200 名",
-    diagramCaption: "每片花瓣代表一个排名系统自己的前200名俱乐部。共有30所学校同时落在每片花瓣之内——这个交集即为共识名单。",
+    diagramCaption: "每片花瓣代表一个排名系统自己的前200名俱乐部。共有31所学校同时落在每片花瓣之内——这个交集即为共识名单。",
     approachCutoff: "第200名",
-    resultsHeading: "共有 30 所学校通过筛选",
+    resultsHeading: "共有 31 所学校通过筛选",
     nearHeading: "在这个更宽门槛下得到明确结论的学校",
-    nearSub: "把门槛从150名放宽到200名,不只是增加了新学校——它还为上一档中悬而未决的两所学校给出了明确答案,并新增了一所。",
-    nearHTML: `<div class="near-note"><strong>佐治亚理工学院</strong>现已确认:上海软科直接将其列入151–200的 ARWU 区间,解决了"前150名"标签页中的不确定性。<strong>普渡大学</strong>现已明确达标——无论采用哪个来源的 US News 数字(第152或第173),都远低于200,此前的数字分歧已不再影响结果。<strong>俄亥俄州立大学</strong>是一个干净利落的新入选者,其 ARWU 是确切数字(第93)而非区间,其余四个系统的表现也都稳固。莱斯大学和马里兰大学也经过核实,但均未达标:莱斯大学的 US News 名次(第201或第219,取决于来源)和马里兰大学的 QS 名次(第207)都刚好超出200名的门槛。</div>`,
+    nearSub: "把门槛从150名放宽到200名,解决了上一档中悬而未决的落选者。",
+    nearHTML: `<div class="near-note"><strong>佐治亚理工学院</strong>现已达标:其已确认的151–200 ARWU区间完全落在这个更宽的门槛之内。<strong>普渡大学</strong>现已明确达标——无论采用哪个来源的 US News 数字(第152或第173),都远低于200,此前的数字分歧已不再影响结果。<strong>俄亥俄州立大学</strong>是一个干净利落的新入选者,其 ARWU 是确切数字(第93)而非区间,其余四个系统的表现也都稳固。莱斯大学和马里兰大学也经过核实,但均未达标:莱斯大学的 US News 名次(第201或第219,取决于来源)和马里兰大学的 QS 名次(第207)都刚好超出200名的门槛。</div>`,
     caveats: [
       "这是本报告中最宽的一档门槛,而 ARWU 自身的数据公开精度在此之后成为实际的限制因素:其区间粒度会从200名以内的50名一档(101–150、151–200)扩大到200名之后的100名一档(201–300、301–400),这使得前250名或前300名这样的门槛更难被精确核实。",
-      "宾夕法尼亚州立大学、布朗大学和普渡大学仍延续「前150名」标签页中的 ARWU 区间估算说明(标注 *)——它们的得分使用区间中位数计算,因为上海软科并未公布这几所学校的确切数字。",
-      "佐治亚理工学院的 ARWU 名次(151–200区间)在本轮中已直接对照上海软科官网确认,解决了「前150名」标签页中悬而未决的问题——这并非新增数据,只是对已有信息做了更确切的核实。"
+      "宾夕法尼亚州立大学、布朗大学、波士顿大学和卡内基梅隆大学仍延续 ARWU 区间估算说明(标注 *)——它们的得分使用区间中位数计算,因为上海软科本轮并未公布这几所学校的确切数字。",
+      "共有31所学校全部确认达标——在本轮 ARWU 2026 数据更新后,本分析候选池中的每一所学校都已通过前200名的门槛。"
     ]
   }
 };
