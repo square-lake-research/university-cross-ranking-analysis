@@ -456,7 +456,7 @@
 
 <div class="wrap hero">
   <div class="eyebrow">
-    <span>University cross-ranking analysis · 2025–2026 editions</span>
+    <span>University cross-ranking analysis · 2026–2027 editions</span>
     <span class="view-toggle" role="tablist" aria-label="Ranking view">
       <button class="view-btn active" data-view="global" role="tab" aria-selected="true">Global View</button>
       <button class="view-btn" data-view="us" role="tab">US View</button>
@@ -514,8 +514,8 @@
   <div class="wrap">
     <div class="tab-bar" role="tablist" aria-label="Ranking cutoff">
       <button class="tab-btn" data-tab="10" role="tab">Top 10</button>
-      <button class="tab-btn active" data-tab="20" role="tab" aria-selected="true">Top 20</button>
-      <button class="tab-btn" data-tab="25" role="tab">Top 25</button>
+      <button class="tab-btn" data-tab="20" role="tab">Top 20</button>
+      <button class="tab-btn active" data-tab="25" role="tab" aria-selected="true">Top 25</button>
       <button class="tab-btn" data-tab="30" role="tab">Top 30</button>
       <button class="tab-btn" data-tab="50" role="tab">Top 50</button>
       <button class="tab-btn" data-tab="100" role="tab">Top 100</button>
@@ -557,8 +557,8 @@
         </svg>
         <p class="diagram-caption" id="diagram-caption">Each petal is one ranking system's own top-25 club. Eleven schools sit inside every petal at once — the intersection is the consensus set.</p>
         <div class="petal-legend">
-          <span><span class="dot" style="background:var(--qs)"></span>QS World University Rankings (2026)</span>
-          <span><span class="dot" style="background:var(--the)"></span>Times Higher Education (2026)</span>
+          <span><span class="dot" style="background:var(--qs)"></span>QS World University Rankings (2027)</span>
+          <span><span class="dot" style="background:var(--the)"></span>Times Higher Education (2027)</span>
           <span><span class="dot" style="background:var(--arwu)"></span>ARWU / Shanghai Ranking (2026)</span>
           <span><span class="dot" style="background:var(--cwur)"></span>CWUR Global 2000 (2026)</span>
           <span><span class="dot" style="background:var(--usn)"></span>US News Best Global (2026–27)</span>
@@ -610,8 +610,8 @@
 
 <footer>
   <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:12px;">
-    <p>Sources: QS World University Rankings 2026 · THE World University Rankings 2026 · ARWU / ShanghaiRanking 2026 · CWUR Global 2000, 2026 · US News Best Global Universities 2026–27</p>
-    <p>Global View ranks against all universities worldwide · US View re-ranks among US institutions only · Compiled August 2026</p>
+    <p>Sources: QS World University Rankings 2027 · THE World University Rankings 2027 · ARWU / ShanghaiRanking 2026 · CWUR Global 2000, 2026 · US News Best Global Universities 2026–27</p>
+    <p>Global View ranks against all universities worldwide · US View re-ranks among US institutions only · Compiled August 2026, refreshed September 2026 for QS and THE 2027 editions</p>
   </div>
 </footer>
 
@@ -653,73 +653,73 @@ const BADGES = {
 // GLOBAL VIEW: each value is the school's absolute (global) rank in that system's full worldwide list
 // name, us, the, qs, cwur, arwu
 const RAW_GLOBAL = {
-  MIT:          [2,2,1,2,3],
-  Harvard:      [1,5,5,1,1],
-  Stanford:     [3,5,3,3,2],
-  Berkeley:     [7,9,17,12,5],
-  Princeton:    [14,3,25,6,6],
-  Yale:         [8,10,21,9,11],
-  Caltech:      [23,7,10,11,10],
-  Penn:         [17,14,15,7,14],
-  Chicago:      [25,15,13,10,9],
-  Cornell:      [13,18,16,14,12],
-  JHU:          [17,16,24,18,23],
-  Columbia:     [10,20,38,8,8],
-  UCLA:         [11,18,46,17,14],
-  Michigan:     [21,23,45,16,35],
-  Northwestern: [24,30,42,15,31],
-  Washington:   [12,25,81,25,16],
-  NYU:          [36,31,55,24,26],
-  UCSD:         [23,47,66,34,20],
-  Duke:         [30,28,62,21,48],
-  UTAustin:     [56,50,68,35,47],
-  UIUC:         [98,41,70,22,46],
-  Wisconsin:    [60,53,110,29,35],
-  UNC:          [55,78,140,43,40],
-  USC:          [77,73,146,55,68],
-  BostonU:      [96,76,88,101,125],
-  PennState:    [91,108,82,57,125],
-  Brown:        [144,65,69,72,125],
-  GeorgiaTech:  [94,41,123,74,175],
-  Purdue:       [152,85,88,68,100],
-  OhioState:    [61,108,190,58,93],
-  CMU:          [112,24,52,94,125]
+  MIT:           [2,2,1,2,3],
+  Harvard:       [1,6,5,1,1],
+  Stanford:      [3,3,2,3,2],
+  Berkeley:      [7,9,20,12,5],
+  Princeton:     [14,3,27,6,6],
+  Yale:          [8,9,16,9,11],
+  Caltech:       [23,7,7,11,10],
+  Penn:          [17,14,15,7,14],
+  Chicago:       [25,16,24,10,9],
+  Cornell:       [13,21,16,14,12],
+  JHU:           [17,17,20,18,23],
+  Columbia:      [10,19,43,8,8],
+  UCLA:          [11,20,49,17,14],
+  Michigan:      [21,23,51,16,35],
+  Northwestern:  [24,29,45,15,31],
+  Washington:    [12,26,92,25,16],
+  NYU:           [36,29,58,24,26],
+  UCSD:          [23,37,81,34,20],
+  Duke:          [30,32,70,21,48],
+  UTAustin:      [56,53,72,35,47],
+  UIUC:          [98,48,74,22,46],
+  Wisconsin:     [60,53,131,29,35],
+  UNC:           [55,85,158,43,40],
+  USC:           [77,71,153,55,68],
+  BostonU:       [96,86,94,101,125],
+  PennState:     [91,101,92,57,125],
+  Brown:         [144,73,66,72,125],
+  GeorgiaTech:   [94,49,142,74,175],
+  Purdue:        [152,84,100,68,100],
+  OhioState:     [61,97,201,58,93],
+  CMU:           [112,24,55,94,125]
 };
 
 // US VIEW: each system filtered to US universities only, then re-numbered 1..31
 // name, us, the, qs, cwur, arwu  (position among the 31 US schools tracked in this analysis)
 const RAW_US = {
-  MIT:          [2,1,1,2,3],
-  Harvard:      [1,3,3,1,1],
-  Stanford:     [3,4,2,3,2],
-  Berkeley:     [4,6,8,10,4],
-  Princeton:    [10,2,11,4,5],
-  Yale:         [5,7,9,7,9],
-  Caltech:      [14,5,4,9,8],
-  Penn:         [12,8,6,5,11],
-  Chicago:      [17,9,5,8,7],
-  Cornell:      [9,11,7,11,10],
-  JHU:          [11,10,10,15,15],
-  Columbia:     [6,13,12,6,6],
-  UCLA:         [7,12,15,14,12],
-  Michigan:     [13,14,14,13,18],
-  Northwestern: [16,18,13,12,17],
-  Washington:   [8,16,23,19,13],
-  NYU:          [19,19,17,18,16],
-  UCSD:         [15,22,19,21,14],
-  Duke:         [18,17,18,16,23],
-  UTAustin:     [21,23,20,22,22],
-  UIUC:         [28,21,22,17,21],
-  Wisconsin:    [22,24,27,20,19],
-  UNC:          [20,28,29,23,20],
-  USC:          [24,26,30,24,24],
-  BostonU:      [27,27,25,31,27],
-  PennState:    [25,31,24,25,30],
-  Brown:        [30,25,21,28,28],
-  GeorgiaTech:  [26,20,28,29,31],
-  Purdue:       [31,29,26,27,26],
-  OhioState:    [23,30,31,26,25],
-  CMU:          [29,15,16,30,29]
+  MIT:           [2,1,1,2,3],
+  Harvard:       [1,4,3,1,1],
+  Stanford:      [3,2,2,3,2],
+  Berkeley:      [4,6,8,10,4],
+  Princeton:     [10,3,11,4,5],
+  Yale:          [5,7,6,7,9],
+  Caltech:       [14,5,4,9,8],
+  Penn:          [11,8,5,5,11],
+  Chicago:       [17,9,10,8,7],
+  Cornell:       [9,13,7,11,10],
+  JHU:           [12,10,9,15,15],
+  Columbia:      [6,11,12,6,6],
+  UCLA:          [7,12,14,14,12],
+  Michigan:      [13,14,15,13,18],
+  Northwestern:  [16,17,13,12,17],
+  Washington:    [8,16,23,19,13],
+  NYU:           [19,18,17,18,16],
+  UCSD:          [15,20,22,21,14],
+  Duke:          [18,19,19,16,23],
+  UTAustin:      [21,23,20,22,22],
+  UIUC:          [28,21,21,17,21],
+  Wisconsin:     [22,24,27,20,19],
+  UNC:           [20,28,30,23,20],
+  USC:           [24,25,29,24,24],
+  BostonU:       [27,29,25,31,27],
+  PennState:     [25,31,24,25,30],
+  Brown:         [30,26,18,28,28],
+  GeorgiaTech:   [26,22,28,29,31],
+  Purdue:        [31,27,26,27,26],
+  OhioState:     [23,30,31,26,25],
+  CMU:           [29,15,16,30,29]
 };
 
 const DISPLAY_NAME = {
@@ -853,87 +853,88 @@ const TABS_GLOBAL = {
     nearHeading: "Nobody else comes close",
     nearSub: "At this tightest cutoff, every other school misses on at least two systems at once, not just one — the gap between 'elite' and 'universal top ten' is real.",
     nearHTML: `<div class="near-grid">
-      <div class="near-card"><h3>UC Berkeley</h3><div class="miss">QS 17, CWUR 12 — misses two systems</div><p>Top 10 on US News (7th), THE (9th), and ARWU (5th). But QS and CWUR both land just outside — the closest overall miss at this cutoff.</p></div>
-      <div class="near-card"><h3>Yale</h3><div class="miss">QS 21, ARWU 11 — misses two systems</div><p>Top 10 on US News, THE, and CWUR. ARWU misses by a single spot, but QS is far off (21st).</p></div>
-      <div class="near-card"><h3>Caltech</h3><div class="miss">US News 23, CWUR 11 — misses two systems</div><p>Top 10 on THE, QS, and ARWU. US News's size penalty and a narrow CWUR miss keep it out.</p></div>
+      <div class="near-card"><h3>Yale</h3><div class="miss">QS 16, ARWU 11 — misses two systems</div><p>Top 10 on US News (8th), THE (9th), and CWUR (9th). ARWU misses by a single spot, and QS — much improved from 21st last cycle — still falls just short at 16th.</p></div>
+      <div class="near-card"><h3>UC Berkeley</h3><div class="miss">QS 20, CWUR 12 — misses two systems</div><p>Top 10 on US News (7th), THE (9th), and ARWU (5th). QS and CWUR both land just outside.</p></div>
+      <div class="near-card"><h3>Caltech</h3><div class="miss">US News 23, CWUR 11 — misses two systems</div><p>Top 10 on THE (7th) and ARWU, plus QS (7th, up from 10th). US News's size penalty and a narrow CWUR miss keep it out.</p></div>
     </div>`,
     caveats: [
       "At the very top, four-out-of-five isn't enough — a school needs all five within the top 10, and only MIT, Harvard, and Stanford manage it. Every other elite research university misses on at least two systems simultaneously, not one.",
-      "Berkeley is the closest non-qualifier by total distance beyond the cutoff — top 10 on three systems, and only narrowly outside on the other two (QS 17th, CWUR 12th)."
+      "Yale is now the closest non-qualifier by total distance beyond the cutoff — top 10 on three systems, and only narrowly outside on the other two. Its QS position jumped from 21st to 16th in the new 2027 edition, the largest single QS move among the schools shown here."
     ]
   },
   20: {
-    keys: ["MIT","Harvard","Stanford","Berkeley","Penn","Cornell"],
+    keys: ["MIT","Harvard","Stanford","Berkeley","Yale","Penn"],
     champions: ["MIT","Harvard","Stanford"],
     diagramLabel: "TOP 20",
     diagramCaption: "Each petal is one ranking system's own top-20 club. Six schools sit inside every petal at once — the intersection is the consensus set.",
     approachCutoff: "20th",
     resultsHeading: "6 schools clear the bar",
-    nearHeading: "Cleared four out of five — at this tighter bar",
-    nearSub: "All five of these placed in the top 25 across every system (see the Top 25 tab). At the stricter top-20 cut, each misses by a handful of spots on exactly one system — usually QS.",
+    nearHeading: "Cornell drops out — Yale takes its place",
+    nearSub: "This is the one cutoff where the 2027 QS and THE editions actually swap a school in the qualifying set: Cornell's THE position slipped just past the line as Yale's QS position moved comfortably inside it.",
     nearHTML: `<div class="near-grid">
-      <div class="near-card"><h3>Yale</h3><div class="miss">QS 21 — one spot over the line</div><p>Top 15 in US News, THE, CWUR, and ARWU. Misses the top-20 cut by a single position on QS.</p></div>
-      <div class="near-card"><h3>Princeton</h3><div class="miss">QS 25 — reputation-survey gap</div><p>3rd on THE, 6th on CWUR, 7th on ARWU. QS's reputation-survey weighting is consistently Princeton's weak spot.</p></div>
-      <div class="near-card"><h3>Johns Hopkins</h3><div class="miss">QS 24 — same pattern</div><p>Top 20 on the other four systems. QS is the one outlier keeping it out of this tighter set.</p></div>
-      <div class="near-card"><h3>Caltech</h3><div class="miss">US News 23 — penalized for size</div><p>Top 10 on QS, THE, CWUR, and ARWU. US News's citation-volume methodology disadvantages a school this small.</p></div>
-      <div class="near-card"><h3>University of Chicago</h3><div class="miss">US News 25 — same pattern</div><p>Top 15 on THE, QS, CWUR, and ARWU. Like Caltech, its US News position lags its standing everywhere else.</p></div>
+      <div class="near-card"><h3>Cornell</h3><div class="miss">THE 21 — one spot over the line</div><p>Top 16 on US News, QS (16th, tied with Yale), CWUR, and ARWU. Slips out of the qualifying set after THE moved it from 18th to 21st this edition.</p></div>
+      <div class="near-card"><h3>Caltech</h3><div class="miss">US News 23 — penalized for size</div><p>Top 11 on QS, THE, CWUR, and ARWU. US News's citation-volume methodology disadvantages a school this small.</p></div>
+      <div class="near-card"><h3>Johns Hopkins</h3><div class="miss">ARWU 23 — one spot outside</div><p>Top 20 on the other four systems, tying the cutoff exactly on QS (20th). ARWU is the one outlier keeping it out.</p></div>
+      <div class="near-card"><h3>University of Chicago</h3><div class="miss">US News 25, QS 24 — two-system gap</div><p>Top 16 on THE and top 9 on ARWU. Both its US News and QS positions land just past 20.</p></div>
+      <div class="near-card"><h3>Princeton</h3><div class="miss">QS 27 — reputation-survey gap</div><p>3rd on THE, 6th on CWUR, 6th on ARWU. QS's reputation-survey weighting remains Princeton's consistent weak spot.</p></div>
     </div>`,
     caveats: [
-      "At a top-20 cutoff the set shrinks fast: 11 schools clear top-25 in all five systems, but only 6 hold up at top-20. QS is the system that trims the list most often — Yale, Princeton, and Johns Hopkins all miss on QS specifically.",
-      "Cornell (18th on THE) is the shakiest inclusion here — closest to the cutoff of the six, so most likely to drop out if any single system's next cycle moves it a couple of spots."
+      "The qualifying set changed at this cutoff for the first time in several refreshes: Cornell — a fixture of every prior edition of this report — drops out, replaced by Yale, whose QS position jumped from 21st to 16th while Cornell's THE position slipped from 18th to 21st.",
+      "QS is still the system most likely to trim the list — Princeton and University of Chicago both miss specifically on QS, and Chicago's QS position (24th) is down 11 spots from 13th last cycle, among the steepest QS drops this edition for a school that recently sat near the world top 15."
     ]
   },
   25: {
-    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","JHU"],
+    keys: ["MIT","Harvard","Stanford","Berkeley","Yale","Caltech","Penn","Chicago","Cornell","JHU"],
     champions: ["MIT","Harvard","Stanford"],
     diagramLabel: "TOP 25",
-    diagramCaption: "Each petal is one ranking system's own top-25 club. Eleven schools sit inside every petal at once — the intersection is the consensus set.",
+    diagramCaption: "Each petal is one ranking system's own top-25 club. Ten schools sit inside every petal at once — the intersection is the consensus set.",
     approachCutoff: "25th",
-    resultsHeading: "11 schools clear the bar",
-    nearHeading: "Close, but not quite",
-    nearSub: "These schools missed the top-25 consensus by a single system — usually the same one, for a telling reason.",
+    resultsHeading: "10 schools clear the bar",
+    nearHeading: "Princeton just misses — the only change from the top-30 list",
+    nearSub: "Princeton's QS position (27th) lands two spots past this cutoff. Everyone else who clears top-30 also clears top-25 — see the Top 30 tab, where Princeton re-enters.",
     nearHTML: `<div class="near-grid">
-      <div class="near-card"><h3>Columbia</h3><div class="miss">QS 38 — misses on reputation weighting</div><p>Top 20 in US News (10th), THE (20th), CWUR (8th), and ARWU (8th). QS's heavy reliance on employer and academic reputation surveys is the one place it falls outside the top 25.</p></div>
-      <div class="near-card"><h3>UCLA</h3><div class="miss">QS 46 — same pattern</div><p>Strong across US News (11th), THE (18th), CWUR (17th), and ARWU (16th). Like Columbia, its QS reputation-survey score doesn't match its research-output standing.</p></div>
+      <div class="near-card"><h3>Princeton</h3><div class="miss">QS 27 — two spots over the line</div><p>3rd on THE, 6th on CWUR, 6th on ARWU, 14th on US News. Misses this tighter cutoff by just two QS positions.</p></div>
+      <div class="near-card"><h3>Columbia</h3><div class="miss">QS 43 — misses on reputation weighting</div><p>Top 20 in US News (10th), THE (19th), CWUR (8th), and ARWU (8th). QS's heavy reliance on employer and academic reputation surveys is the one place it falls well outside the top 25.</p></div>
+      <div class="near-card"><h3>UCLA</h3><div class="miss">QS 49 — same pattern</div><p>Strong across US News (11th), THE (20th), CWUR (17th), and ARWU (14th). Like Columbia, its QS reputation-survey score doesn't match its research-output standing.</p></div>
     </div>`,
     caveats: [
-      "Caltech is a notable case: its US News position is 23rd — just inside the cutoff — which is easy to underestimate since US News penalizes small schools relative to QS, THE, CWUR, and ARWU, where Caltech sits comfortably in the top 10-11.",
-      "Princeton (QS 25th, exactly at the cutoff) and Johns Hopkins (QS 24th, one spot inside it) sit closest to the boundary — a small shift in the next QS cycle could move either out of the set."
+      "Princeton is the one school this cutoff loses compared to the wider Top 30 bar — its QS position moved from 25th to 27th this edition, just enough to drop it out here while still clearing 30.",
+      "Caltech's US News position (23rd) is again the closest of the ten qualifiers to this cutoff — comfortably inside on the other four systems, where it now sits in the high single digits on both QS and THE."
     ]
   },
   30: {
     keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","JHU"],
     champions: ["MIT","Harvard","Stanford"],
     diagramLabel: "TOP 30",
-    diagramCaption: "Each petal is one ranking system's own top-30 club. The same eleven schools sit inside every petal — loosening the bar from 25 to 30 doesn't add anyone.",
+    diagramCaption: "Each petal is one ranking system's own top-30 club. Eleven schools sit inside every petal at once — one more than at Top 25.",
     approachCutoff: "30th",
-    resultsHeading: "11 schools clear the bar — identical to the top-25 cut",
+    resultsHeading: "11 schools clear the bar — Princeton is the addition over Top 25",
     nearHeading: "Cleared four out of five — the next tier",
-    nearSub: "Loosening the cutoff from 25 to 30 doesn't pull in any new schools. These four are the closest misses, and all trip on the same system.",
+    nearSub: "These four are the closest misses at this wider cutoff, and each trips on QS, usually alongside a second system.",
     nearHTML: `<div class="near-grid">
-      <div class="near-card"><h3>Columbia</h3><div class="miss">QS 38 — still 8 short</div><p>Comfortably inside top 20 on the other four systems. Even the looser cutoff isn't loose enough for its QS position.</p></div>
-      <div class="near-card"><h3>Northwestern</h3><div class="miss">QS 42, ARWU 33 — two-system gap</div><p>15th on CWUR, 24th on US News. But QS and ARWU both place it in the 30s, keeping it out at any cutoff up through 30.</p></div>
-      <div class="near-card"><h3>University of Michigan</h3><div class="miss">QS 45, ARWU 33 — same shape</div><p>21st on US News, 16th on CWUR. Like Northwestern, its QS and ARWU positions sit just past the line.</p></div>
-      <div class="near-card"><h3>UCLA</h3><div class="miss">QS 46 — furthest out</div><p>Top 20 on the other four. Its QS position remains the single largest gap of any near-miss school at this cutoff.</p></div>
+      <div class="near-card"><h3>Columbia</h3><div class="miss">QS 43 — still 13 short</div><p>Comfortably inside top 20 on the other four systems. Even the looser cutoff isn't loose enough for its QS position.</p></div>
+      <div class="near-card"><h3>Northwestern</h3><div class="miss">QS 45, ARWU 31 — two-system gap</div><p>15th on CWUR, 24th on US News. But QS and ARWU both place it just past 30.</p></div>
+      <div class="near-card"><h3>University of Michigan</h3><div class="miss">QS 51, ARWU 35 — same shape</div><p>21st on US News, 16th on CWUR. Like Northwestern, its QS and ARWU positions sit past the line.</p></div>
+      <div class="near-card"><h3>UCLA</h3><div class="miss">QS 49 — furthest out</div><p>Top 20 on the other four. Its QS position remains the single largest gap of any near-miss school at this cutoff.</p></div>
     </div>`,
     caveats: [
-      "The qualifying set is genuinely identical between top-25 and top-30 — there's a real gap between the 11th-place school (Johns Hopkins, consensus score 18.8) and the next-closest miss (Columbia, which still fails QS at 38).",
-      "Northwestern and Michigan are the most interesting near-misses: both are held back on two systems (QS and ARWU) rather than just one, unlike Columbia and UCLA, who each miss on QS alone."
+      "Top 30 now differs from Top 25 for the first time in this analysis: Princeton clears 30 on the strength of its other four systems (QS 27th) but not 25. The other ten qualifiers are unchanged from the Top 25 cut.",
+      "Northwestern and Michigan remain the most interesting near-misses: both are held back on two systems (QS and ARWU) rather than just one, unlike Columbia and UCLA, who each miss on QS alone."
     ]
   },
   50: {
-    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern"],
+    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Northwestern"],
     champions: ["MIT","Harvard","Stanford"],
     diagramLabel: "TOP 50",
-    diagramCaption: "Each petal is one ranking system's own top-50 club. Fifteen schools sit inside every petal at once — the intersection is the consensus set.",
+    diagramCaption: "Each petal is one ranking system's own top-50 club. Fourteen schools sit inside every petal at once — the intersection is the consensus set.",
     approachCutoff: "50th",
-    resultsHeading: "15 schools clear the bar",
-    nearHeading: "Just outside — held back by one system",
-    nearSub: "At this looser cutoff, the near-misses are schools with strong standing on four systems but a QS position that runs well past 50.",
-    nearHTML: `<div class="near-note"><strong>Carnegie Mellon (QS 52), Duke (QS 62), NYU (QS 55), and UC San Diego (QS 66)</strong> are the next tier down — each comfortably placed on CWUR and at least competitive on THE and US News, but with a QS reputation-survey score that lands too far outside the top 50 to qualify, even under this loosened cutoff. Carnegie Mellon is the closest of the group, missing by just two QS spots.</div>`,
+    resultsHeading: "14 schools clear the bar",
+    nearHeading: "Michigan misses by a single QS position",
+    nearSub: "Michigan qualified at this cutoff in the prior edition; this year's QS movement pushes it just past the widened cutoff.",
+    nearHTML: `<div class="near-note"><strong>University of Michigan (QS 51, one spot over the line), Carnegie Mellon (QS 55), NYU (QS 58), and UC San Diego (QS 81)</strong> are the next tier down — each comfortably placed on CWUR and at least competitive on THE and US News, but with a QS reputation-survey score that lands too far outside the top 50 to qualify, even under this loosened cutoff. Michigan is the closest of the group, missing by just a single QS spot after this edition's QS movement pushed it from 45th to 51st.</div>`,
     caveats: [
-      "At top-50, Northwestern and Michigan both clear the bar — their QS and ARWU positions (all in the low-to-mid 30s to mid-40s) fit comfortably once the cutoff loosens past 30.",
-      "This is the widest cut in the report and the most forgiving of QS's reputation-survey volatility — but it's also where a single system's year-over-year swing is most likely to add or remove a school."
+      "Michigan is the standout change at this cutoff: it qualified at Top 50 in the prior edition (QS 45th) but falls out this cycle after QS moved it to 51st — missing by the smallest possible margin.",
+      "This is the widest cut before saturation begins and the most forgiving of QS's reputation-survey volatility — but it's also where a single system's year-over-year swing is most likely to add or remove a school, as Michigan's case shows."
     ]
   },
   100: {
@@ -943,44 +944,45 @@ const TABS_GLOBAL = {
     diagramCaption: "Each petal is one ranking system's own top-100 club. Twenty-one schools sit inside every petal at once — the intersection is the consensus set.",
     approachCutoff: "100th",
     resultsHeading: "21 schools clear the bar",
-    nearHeading: "Two schools that look close, but don't actually qualify",
-    nearSub: "Carnegie Mellon and Brown both do well on four systems, but ARWU — the pure research-output ranking — places both outside the top 100, which rules them out at any cutoff up through 100.",
-    nearHTML: `<div class="near-note"><strong>Carnegie Mellon</strong> sits in ARWU's #101-150 band and is also 112th on US News — both miss the cutoff, not just one. <strong>Brown</strong> is likewise in ARWU's #101-150 band, even though it's comfortably inside 100 on the other four systems. Both are held back by the same thing: ARWU's heavy weighting toward Nobel/Fields laureates and Nature/Science publications, a research-prestige signal that neither school's size or focus areas are built to maximize.</div>`,
+    nearHeading: "The closest misses in the entire report",
+    nearSub: "Boston University and Penn State each miss by a single position on one system, on top of an ARWU band that already excludes both.",
+    nearHTML: `<div class="near-note"><strong>Boston University</strong> (CWUR 101st, one spot over) and <strong>Penn State</strong> (THE 101st, improved from 108th but still one spot over) are the tightest misses at this cutoff — each held back by a single position on one system, in addition to the ARWU band that already excludes them. <strong>Carnegie Mellon</strong> sits in ARWU's #101-150 band and is also 112th on US News — both miss the cutoff, not just one. <strong>Brown</strong> is 144th on US News in addition to its ARWU band placement, even though it's comfortably inside 100 on THE (73rd) and QS (66th, improved from 69th). All four are held back at least in part by ARWU's heavy weighting toward Nobel/Fields laureates and Nature/Science publications, a research-prestige signal that none of these four schools' size or focus areas are built to maximize.</div>`,
     caveats: [
-      "Duke, UT Austin, and UIUC are the three new confirmed entrants at this cutoff — each clears all five systems, with UIUC as the closest call (US News 98th, just inside the line).",
+      "The 21 qualifying schools are unchanged from the prior edition — this year's QS and THE movement didn't push anyone across this particular line, though several individual scores shifted meaningfully within the set.",
+      "Boston University and Penn State are now the tightest misses in the entire report: Boston University's CWUR position (101st) and Penn State's THE position (101st, improved from 108th) each land exactly one spot past the cutoff.",
       "Carnegie Mellon and Brown were checked directly against ShanghaiRanking's own site and don't qualify — this isn't a data gap, it's a real miss on ARWU specifically."
     ]
   },
   150: {
-    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","UNC","USC","BostonU","PennState","Brown","CMU"],
+    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","BostonU","PennState","Brown","CMU"],
     champions: ["MIT","Harvard","Stanford"],
     diagramLabel: "TOP 150",
-    diagramCaption: "Each petal is one ranking system's own top-150 club. Twenty-eight schools sit inside every petal at once — the intersection is the consensus set.",
+    diagramCaption: "Each petal is one ranking system's own top-150 club. Twenty-six schools sit inside every petal at once — down from 28 in the prior edition.",
     approachCutoff: "150th",
-    resultsHeading: "28 schools clear the bar",
-    nearHeading: "Two more that look plausible, but don't quite make it",
-    nearSub: "Purdue and Georgia Tech are the next-closest candidates at this cutoff — one misses on a hard number, the other on a genuine band boundary.",
-    nearHTML: `<div class="near-note"><strong>Purdue</strong> clears QS (88), THE (85), CWUR (68), and ARWU (100, now an exact figure) comfortably — but its US News figure is 152 (by one source) or 173 (by another), both just past the line. Either way, it misses. <strong>Georgia Tech</strong> clears US News (94), THE (41), and QS (123), but its ARWU position is confirmed at 151-200 — even the best case in that band (151) sits one spot outside this cutoff, so it's excluded on a real boundary, not a data gap.</div>`,
+    resultsHeading: "26 schools clear the bar",
+    nearHeading: "USC and UNC just miss — both on QS",
+    nearSub: "Both cleared this cutoff in the prior edition; this year's QS movement pushes each just past 150.",
+    nearHTML: `<div class="near-note"><strong>USC (QS 153, three spots over)</strong> and <strong>UNC (QS 158, eight spots over)</strong> both qualified at this cutoff in the prior edition (QS 146th and 140th respectively) but fall out this cycle as QS moved both schools down. <strong>Purdue</strong> clears QS (100), THE (84), CWUR (68), and ARWU (100, now an exact figure) comfortably — but its US News figure is 152 (by one source) or 173 (by another), both just past the line. <strong>Georgia Tech</strong> clears US News (94), THE (49), and QS (142), but its ARWU position is confirmed at 151-200 — even the best case in that band (151) sits one spot outside this cutoff, so it's excluded on a real boundary, not a data gap.</div>`,
     caveats: [
+      "USC and UNC are the two schools this cutoff loses compared to the prior edition — both slipped on QS (USC from 146th to 153rd, UNC from 140th to 158th), pushing them just past 150.",
       "Penn State, Brown, and Carnegie Mellon are included with a caveat: ShanghaiRanking only publishes their ARWU position as a band (101-150), not an exact number, for any of the three. Since even the worst case in that band (150) still clears this cutoff, all three are counted as qualifying — but their consensus scores (marked with *) use the band's midpoint (125) as a stand-in for the real figure.",
-      "Boston University moved into this same banded group this cycle — its ARWU position was an exact 101st last edition, but ShanghaiRanking now reports it only as 101-150 for 2026. Since the whole band still clears 150, it remains a qualifier, now with the same asterisk treatment as Penn State, Brown, and CMU.",
-      "Purdue moved the other way: its ARWU position is now an exact 100th (up from a 101-150 band last cycle) — one of the clearest single-school swings in this year's refresh. It still doesn't qualify here, but purely on its US News figure, unrelated to ARWU."
+      "Boston University remains in the same banded group — its ARWU position is reported only as 101-150 for 2026, and since the whole band still clears 150, it remains a qualifier with the same asterisk treatment."
     ]
   },
   200: {
-    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","UNC","USC","BostonU","PennState","Brown","GeorgiaTech","OhioState","Purdue","CMU"],
+    keys: ["MIT","Harvard","Stanford","Berkeley","Princeton","Yale","Caltech","Penn","Chicago","Cornell","Columbia","JHU","UCLA","Michigan","Northwestern","Washington","NYU","Duke","UCSD","UTAustin","UIUC","Wisconsin","UNC","USC","BostonU","PennState","Brown","GeorgiaTech","Purdue","CMU"],
     champions: ["MIT","Harvard","Stanford"],
     diagramLabel: "TOP 200",
-    diagramCaption: "Each petal is one ranking system's own top-200 club. Thirty-one schools sit inside every petal at once — the intersection is the consensus set.",
+    diagramCaption: "Each petal is one ranking system's own top-200 club. Thirty schools sit inside every petal at once — one short of the full 31-school pool.",
     approachCutoff: "200th",
-    resultsHeading: "31 schools clear the bar",
-    nearHeading: "The schools that resolved cleanly at this wider cutoff",
-    nearSub: "Loosening from 150 to 200 doesn't just add new schools — it settles the fence-sitters from the previous tab.",
-    nearHTML: `<div class="near-note"><strong>Georgia Tech</strong> now qualifies: its confirmed 151-200 ARWU band fits entirely within this wider cutoff. <strong>Purdue</strong> now qualifies outright — its US News figure (152 or 173, depending on source) is comfortably under 200 either way, so the earlier discrepancy no longer matters. <strong>Ohio State</strong> is a clean entrant, with an exact ARWU figure (93rd) rather than a band, plus solid marks across the other four systems. Rice and the University of Maryland were checked and do not qualify: Rice's US News figure (201 or 219, depending on source) and Maryland's QS figure (207) both land just past 200.</div>`,
+    resultsHeading: "30 schools clear the bar",
+    nearHeading: "One school misses by a single QS position",
+    nearSub: "Ohio State would complete the full 31-school set, but this year's QS edition places it one spot too far out.",
+    nearHTML: `<div class="near-note"><strong>Ohio State</strong> just misses this widest cutoff: QS 2027 places it 201st — one spot past the line — despite solid marks elsewhere (US News 61st, THE 97th, CWUR 58th, and an exact ARWU figure of 93rd). It's the only school in this analysis's 31-school pool that doesn't clear Top 200 this cycle. Rice and the University of Maryland were also checked and do not qualify: Rice's US News figure (201 or 219, depending on source) and Maryland's QS figure (207) both land just past 200.</div>`,
     caveats: [
       "This is the widest cutoff in the report, and ARWU's own reporting granularity becomes the practical limit past this point: its bands widen from 50-rank increments (101-150, 151-200) to 100-rank increments (201-300, 301-400) beyond 200, making a top-250 or top-300 cut much harder to verify with precision.",
       "Penn State, Brown, Boston University, and Carnegie Mellon still carry the ARWU band-estimate caveat (marked with *) — their scores use the band midpoint since ShanghaiRanking doesn't publish an exact figure for any of them this cycle.",
-      "31 schools, all confirmed — every school in this analysis's candidate pool now clears the top-200 bar under the refreshed ARWU 2026 data."
+      "30 of the 31 schools in this analysis's candidate pool clear the top-200 bar this cycle — Ohio State is the sole exception, missing by the narrowest possible margin (QS 201st) after this year's QS movement."
     ]
   }
 };
@@ -1005,9 +1007,9 @@ const TABS_US = {
     nearHeading: "Three schools miss by exactly one position",
     nearSub: "This is the tightest possible near-miss margin — each of these three is one US-relative spot away from qualifying, on a different system each time.",
     nearHTML: `<div class="near-grid">
-      <div class="near-card"><h3>Princeton</h3><div class="miss">11th among US schools on QS</div><p>2nd on THE, 4th on CWUR, 5th on ARWU among US universities. Misses by a single position, and only on QS.</p></div>
-      <div class="near-card"><h3>Cornell</h3><div class="miss">11th among US schools on THE and CWUR</div><p>9th on US News, 7th on QS among US universities. Two systems place it 11th — one spot outside this cutoff.</p></div>
-      <div class="near-card"><h3>Penn</h3><div class="miss">11th among US schools on US News and ARWU</div><p>8th on THE, 6th on QS among US universities. Like Cornell, misses by exactly one position, just on a different pair of systems.</p></div>
+      <div class="near-card"><h3>Princeton</h3><div class="miss">11th among US schools on QS</div><p>3rd on THE (tied with Stanford), 4th on CWUR, 5th on ARWU among US universities. Misses by a single position, and only on QS.</p></div>
+      <div class="near-card"><h3>Cornell</h3><div class="miss">13th among US schools on THE, 11th on CWUR</div><p>9th on US News, 7th on QS among US universities. Two systems place it outside this cutoff, THE by the widest margin.</p></div>
+      <div class="near-card"><h3>Penn</h3><div class="miss">11th among US schools on US News and ARWU</div><p>8th on THE, 5th on QS among US universities. Misses by exactly one position on two systems.</p></div>
     </div>`,
     caveats: [
       "Under the US-relative approach, Berkeley and Yale newly qualify at this tightest cutoff — something that never happens in the original global-rank edition, where non-US schools (Oxford, ETH, Imperial, NUS...) occupy enough of the world's top-10 slots to push both out.",
@@ -1024,8 +1026,8 @@ const TABS_US = {
     nearHeading: "Close, but not quite",
     nearSub: "These four schools are held back by their US-relative QS or ARWU position specifically, even though every other system places them comfortably inside the cutoff.",
     nearHTML: `<div class="near-grid">
-      <div class="near-card"><h3>Duke</h3><div class="miss">21st among US schools on ARWU</div><p>Top 18 among US schools on the other four. Misses by a single US-relative position, on ARWU alone.</p></div>
-      <div class="near-card"><h3>UC San Diego</h3><div class="miss">22nd on THE, 21st on CWUR (US-relative)</div><p>15th on US News among US schools. Two systems place it just past the cutoff.</p></div>
+      <div class="near-card"><h3>Duke</h3><div class="miss">23rd among US schools on ARWU</div><p>Top 19 among US schools on the other four. Misses by three US-relative positions, on ARWU alone.</p></div>
+      <div class="near-card"><h3>UC San Diego</h3><div class="miss">22nd on QS, 21st on CWUR (US-relative)</div><p>15th on US News among US schools. Two systems place it just past the cutoff.</p></div>
       <div class="near-card"><h3>University of Washington</h3><div class="miss">23rd among US schools on QS</div><p>8th on US News among US schools — one of the largest gaps between a school's best and worst US-relative position in this dataset.</p></div>
       <div class="near-card"><h3>UT Austin</h3><div class="miss">23rd among US schools on THE and ARWU</div><p>20th on QS among US schools. Consistently just outside on two systems rather than comfortably inside on most.</p></div>
     </div>`,
@@ -1152,7 +1154,7 @@ const VIEW_META = {
 };
 
 let currentView = 'global';
-let currentCutoff = 20;
+let currentCutoff = 25;
 
 function applyViewMeta(view){
   const m = VIEW_META[view];
@@ -1204,7 +1206,7 @@ document.querySelectorAll('.view-btn').forEach(btn => {
 });
 
 applyViewMeta('global');
-renderTab(20);
+renderTab(25);
 </script>
 
     <script data-goatcounter="https://square-lake-research.goatcounter.com/count"
