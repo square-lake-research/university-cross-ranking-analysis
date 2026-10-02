@@ -297,6 +297,34 @@
   .results-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:24px; flex-wrap:wrap; }
   .results-head h2{ font-size:clamp(22px,3vw,30px); color:#fff; font-weight:600; }
   .results-note{ font-size:12.5px; color:var(--text-faint); max-width:260px; }
+  .scoring-options-section{ background:var(--bg); border-bottom:1px solid var(--line); padding:16px 0; }
+  .scoring-options{ display:flex; gap:28px; flex-wrap:wrap; justify-content:center; }
+  .scoring-options label{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing:0.7px;
+    color:var(--text-faint);
+  }
+  .scoring-options select{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    font-weight:500;
+    padding:7px 12px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--text);
+    cursor:pointer;
+    transition:border-color 0.15s ease;
+  }
+  .scoring-options select:hover{ border-color:#4a4d5a; }
+  .scoring-options select:focus{ outline:2px solid var(--gold); outline-offset:1px; }
+  .scoring-options select option{ background:var(--surface); color:var(--text); }
 
   table{ width:100%; border-collapse:collapse; font-size:14px; }
   thead th{
@@ -461,10 +489,6 @@
       <button class="view-btn active" data-view="global" role="tab" aria-selected="true">Global View</button>
       <button class="view-btn" data-view="us" role="tab">US View</button>
     </span>
-    <span class="view-toggle method-toggle" role="tablist" aria-label="Scoring method">
-      <button class="view-btn method-btn active" data-method="raw" role="tab" aria-selected="true">Raw Rank Avg.</button>
-      <button class="view-btn method-btn" data-method="normalized" role="tab">Percentile-Normalized</button>
-    </span>
   </div>
   <h1 id="hero-title">Which colleges survive <em>every</em> ranking lens — not just one.</h1>
   <p class="hero-sub" id="hero-sub-text">Five major global ranking systems disagree constantly, because each rewards a different definition of excellence. This report finds the US universities that place consistently across <strong>all five</strong> — QS, THE, ARWU, CWUR, and US News — at once. Pick a cutoff below to see how the qualifying set changes.</p>
@@ -523,8 +547,39 @@
         <p>In practice, switching methods rarely changes <em>who</em> qualifies, but it can reorder <em>who ranks higher within the set</em> — a school whose weakest system has a small ranked pool (like ARWU or QS) gets penalized more under percentile-normalization than the same raw rank in a system with a larger pool (like THE or US News). In the US View, all five systems already share the same 31-school pool, so normalizing has no effect on the order there.</p>
       </div>
     </div>
+    <div class="approach-grid">
+      <div>
+        <h2>Consistent-Across-Five vs. Best Average selection</h2>
+      </div>
+      <div class="approach-body">
+        <p>The <strong>Consistent (All Five) / Best Average</strong> toggle changes something more fundamental than the scoring toggle above: it changes <em>which schools qualify</em>, not just how they're ordered.</p>
+        <p><strong>Consistent (All Five)</strong> (the default, used throughout this report) keeps only schools that place at or better than the cutoff <strong>on every single one</strong> of the five systems — one miss disqualifies a school outright, no matter how strong its other four positions are.</p>
+        <p><strong>Best Average</strong> instead ranks all 31 candidate schools in this analysis by their average score (raw or percentile-normalized, matching whichever scoring method is currently selected) and simply takes the top N — with no requirement that any individual system's position clear the cutoff at all. A school with one weak system can still make the list if its other four are strong enough to pull the average up; a school that clears every system narrowly can be bumped by a school that's merely "good" everywhere but outstanding in one or two.</p>
+        <div class="formula">Consistent: qualify ⟺ rank<sub>i</sub> ≤ N for all five i&nbsp;&nbsp;·&nbsp;&nbsp;Best&nbsp;Average: qualify ⟺ school is among the N lowest average scores</div>
+        <p>At most cutoffs the two methods select the exact same set — but not always. At Top 20 in the Global View, for instance, Best Average swaps Penn out for Caltech (whose US News position, 23rd, is the one thing keeping it out of the Consistent set, even though its other four positions are all top-11). The qualifying-set note above the table flags whenever the two methods disagree at the current cutoff.</p>
+      </div>
+    </div>
   </div>
 </details>
+
+<div class="scoring-options-section">
+  <div class="wrap">
+    <div class="scoring-options">
+      <label>Qualifying rule
+        <select id="selection-select" aria-label="Qualifying rule">
+          <option value="consistent" selected>Consistent (All Five)</option>
+          <option value="bestavg">Best Average</option>
+        </select>
+      </label>
+      <label>Scoring
+        <select id="method-select" aria-label="Scoring method">
+          <option value="raw" selected>Raw Rank Avg.</option>
+          <option value="normalized">Percentile-Normalized</option>
+        </select>
+      </label>
+    </div>
+  </div>
+</div>
 
 <div class="tab-bar-section">
   <div class="wrap">
@@ -584,8 +639,11 @@
       <div class="table-col">
         <div class="results-head">
           <h2 id="results-heading">10 schools clear the bar</h2>
-          <p class="results-note" id="results-note-text">Sorted by consensus score. All figures verified directly against each publisher's own current release. No estimates unless marked *.</p>
-          <p class="results-note" id="method-note" style="margin-top:4px;"></p>
+          <div class="results-meta">
+            <p class="results-note" id="results-note-text">Sorted by consensus score. All figures verified directly against each publisher's own current release. No estimates unless marked *.</p>
+            <p class="results-note" id="method-note" style="margin-top:4px;"></p>
+            <p class="results-note" id="selection-note" style="margin-top:4px;"></p>
+          </div>
         </div>
         <table>
           <thead>
@@ -1193,6 +1251,61 @@ const VIEW_META = {
 let currentView = 'global';
 let currentCutoff = 25;
 let currentMethod = 'raw';
+let currentSelection = 'consistent';
+
+// Best Average mode answers a different question than Consistent-Across-Five, so it needs
+// its own notion of "how many schools." Consistent-Across-Five's qualifying count at a given
+// cutoff is whatever falls out of the AND-filter (e.g. only 3 schools clear Top 10 on all
+// five systems at once). Best Average keeps that same group size — so the two methods are
+// always compared head-to-head on an equal number of schools — but fills it by ranking all
+// 31 candidate schools by average score and taking that many from the top, with no
+// requirement that any individual system's position clear the cutoff at all.
+function buildBestAverageTab(view, n){
+  const meta = VIEW_META[view];
+  const raw = meta.raw;
+  const consistentTab = meta.tabs[n];
+  const consistentKeys = consistentTab ? consistentTab.keys : [];
+  const take = consistentKeys.length;
+
+  const pool = ALL_31.filter(k => raw[k]);
+  const ranked = pool.slice().sort((a,b) => score(a, raw, view, currentMethod) - score(b, raw, view, currentMethod));
+  const keys = ranked.slice(0, take);
+  const topScore = take > 0 ? score(keys[0], raw, view, currentMethod) : 0;
+  const champions = keys.filter(k => Math.abs(score(k, raw, view, currentMethod) - topScore) < 0.001);
+
+  const keySet = new Set(keys);
+  const consistentSet = new Set(consistentKeys);
+  const added = keys.filter(k => !consistentSet.has(k));
+  const removed = consistentKeys.filter(k => !keySet.has(k));
+
+  const methodLabel = currentMethod === 'normalized' ? 'percentile-normalized' : 'raw-rank';
+  const diagramCaption = `Best Average keeps the same group size as Consistent-Across-Five at this cutoff (${take} school${take===1?'':'s'}) but fills it by ${methodLabel} average score across all ${pool.length} candidate schools, rather than requiring each one to individually clear Top ${n} on every system.`;
+
+  let nearHTML;
+  if(added.length === 0 && removed.length === 0){
+    nearHTML = `<div class="near-note">At this cutoff, Best Average selects <strong>the same ${take} school${take===1?'':'s'}</strong> as Consistent-Across-Five — every school strong enough on average to make this list also happens to clear Top ${n} on all five systems individually. The two methods agree here.</div>`;
+  } else {
+    const addedText = added.length ? added.map(k => DISPLAY_NAME[k]).join(', ') : 'none';
+    const removedText = removed.length ? removed.map(k => DISPLAY_NAME[k]).join(', ') : 'none';
+    nearHTML = `<div class="near-note"><strong>Compared with Consistent-Across-Five at this same cutoff (both show ${take} school${take===1?'':'s'})</strong> — added by Best Average: ${addedText}; dropped: ${removedText}. The added schools miss Top ${n} outright on one system but more than make up for it elsewhere on average; the dropped schools clear Top ${n} on every system but don't average as strongly as the schools now ahead of them.</div>`;
+  }
+
+  return {
+    keys,
+    champions,
+    diagramLabel: `TOP ${n}`,
+    diagramCaption,
+    approachCutoff: String(n),
+    resultsHeading: `${take} school${take===1?'':'s'} by best average`,
+    nearHeading: (added.length || removed.length) ? 'How this differs from Consistent-Across-Five' : 'Same set as Consistent-Across-Five',
+    nearSub: `Best Average keeps the same ${take}-school group size as Consistent-Across-Five at this cutoff, but fills it by average score rather than requiring every individual system to clear Top ${n}.`,
+    nearHTML,
+    caveats: [
+      `Best Average selects the ${take} schools with the strongest ${methodLabel} average across all five systems — the same group size the Consistent-Across-Five method finds at this cutoff, but chosen by overall standing rather than by clearing Top ${n} on every system individually.`,
+      `A weak position on one system can be offset by strength on the others under Best Average; under Consistent-Across-Five, one miss disqualifies a school outright no matter how strong its other four positions are.`
+    ]
+  };
+}
 
 function applyViewMeta(view){
   const m = VIEW_META[view];
@@ -1217,12 +1330,22 @@ function updateScoreHeaderLabel(){
   }
 }
 
+function updateSelectionNote(){
+  const note = document.getElementById('selection-note');
+  if(note){
+    note.textContent = currentSelection === 'bestavg'
+      ? 'Best Average: schools are ranked by overall average score and the top N shown here — a weak system can be offset by strength elsewhere. Qualifying schools can differ from Consistent (All Five) — see "How this works" below.'
+      : 'Consistent (All Five): a school must clear this cutoff on every individual system at once — one miss disqualifies it, regardless of its average.';
+  }
+}
+
 function renderTab(n){
   currentCutoff = n;
   const meta = VIEW_META[currentView];
-  const t = meta.tabs[n];
+  const t = currentSelection === 'bestavg' ? buildBestAverageTab(currentView, n) : meta.tabs[n];
   renderTable(t.keys, t.champions, meta.raw, currentView, currentMethod);
   updateScoreHeaderLabel();
+  updateSelectionNote();
   document.getElementById('diagram-cutoff-label').textContent = t.diagramLabel;
   document.getElementById('diagram-caption').textContent = t.diagramCaption;
   document.getElementById('approach-cutoff-text').textContent = t.approachCutoff;
@@ -1252,11 +1375,15 @@ function switchView(view){
 
 function switchMethod(method){
   currentMethod = method;
-  document.querySelectorAll('[data-method]').forEach(btn => {
-    const active = btn.getAttribute('data-method') === method;
-    btn.classList.toggle('active', active);
-    btn.setAttribute('aria-selected', active ? 'true' : 'false');
-  });
+  const sel = document.getElementById('method-select');
+  if(sel) sel.value = method;
+  renderTab(currentCutoff);
+}
+
+function switchSelection(sel){
+  currentSelection = sel;
+  const el = document.getElementById('selection-select');
+  if(el) el.value = sel;
   renderTab(currentCutoff);
 }
 
@@ -1268,9 +1395,11 @@ document.querySelectorAll('[data-view]').forEach(btn => {
   btn.addEventListener('click', () => switchView(btn.getAttribute('data-view')));
 });
 
-document.querySelectorAll('[data-method]').forEach(btn => {
-  btn.addEventListener('click', () => switchMethod(btn.getAttribute('data-method')));
-});
+const methodSelectEl = document.getElementById('method-select');
+if(methodSelectEl) methodSelectEl.addEventListener('change', (e) => switchMethod(e.target.value));
+
+const selectionSelectEl = document.getElementById('selection-select');
+if(selectionSelectEl) selectionSelectEl.addEventListener('change', (e) => switchSelection(e.target.value));
 
 applyViewMeta('global');
 renderTab(25);
