@@ -467,6 +467,10 @@
       <button class="view-btn active" data-view="global" role="tab" aria-selected="true">全球视角</button>
       <button class="view-btn" data-view="us" role="tab">美国内部视角</button>
     </span>
+    <span class="view-toggle method-toggle" role="tablist" aria-label="计分方法">
+      <button class="view-btn method-btn active" data-method="raw" role="tab" aria-selected="true">原始名次平均</button>
+      <button class="view-btn method-btn" data-method="normalized" role="tab">百分位归一化</button>
+    </span>
   </div>
   <h1 id="hero-title">能同时扛住<em>每一个</em>排名系统的大学——而不只是其中一个。</h1>
   <p class="hero-sub" id="hero-sub-text">五大全球排名系统的评判标准截然不同,彼此之间的结果也经常互相矛盾。本报告找出了能<strong>同时</strong>在这五个系统——QS、THE、ARWU、CWUR 和 US News——中都保持稳定名次的美国大学。在下方选择一个筛选范围,看看符合条件的名单如何变化。</p>
@@ -511,6 +515,18 @@
         <p><strong>评分方式:</strong> 对于通过筛选的学校,按其五项名次的简单平均值排序——数值越低,代表该校在五个系统中的排名都持续接近顶尖,而不仅仅是勉强达标。</p>
         <div class="formula">共识得分 = ( US News + THE + QS + CWUR + ARWU ) / 5</div>
         <p>这种算法奖励的是<em>稳定性</em>,而非<em>单项最佳表现</em>。一所学校若在某个系统排第 1、却在另一个系统只排第 60,无论那个第一名多耀眼,依然无法入选。</p>
+      </div>
+    </div>
+    <div class="approach-grid">
+      <div>
+        <h2>原始名次平均 vs. 百分位归一化计分</h2>
+      </div>
+      <div class="approach-body">
+        <p>页面顶部的<strong>「原始名次平均 / 百分位归一化」</strong>切换按钮,只改变已经通过筛选的学校<em>如何计分排序</em>——它不会改变<em>哪些</em>学校通过筛选,因为筛选规则始终是"每个系统的原始名次都要达到该档门槛及以上"。</p>
+        <p><strong>原始名次平均</strong>(默认方式)把"第20名"在每个系统中都当作同一回事,尽管五个系统上榜的院校总数并不相同。<strong>百分位归一化</strong>则会先把每个名次除以该系统的总上榜院校数再求平均,这样,在一个只有1,000所院校的榜单中排第20(相当于前2%),就比在一个有2,300所院校的榜单中排第20(不到前1%)更有分量。</p>
+        <div class="formula">百分位得分 = 平均( 名次<sub>i</sub> ÷ 该系统上榜总数<sub>i</sub> × 100 ),共五个系统</div>
+        <p>所采用的各系统上榜总数,均来自发布方自己对当前版本的描述:US News 全球最佳大学 2026–27 版——评估超过2,250所学校;泰晤士高等教育世界大学排名 2027 版——共2,297所院校上榜;QS 世界大学排名 2027 版——共1,504所院校入榜;CWUR 世界大学排名 2026 版——按定义固定为2,000所;ARWU / 上海软科排名 2026 版——公布的是最佳1,000所。</p>
+        <p>实际效果是:切换计分方法很少会改变<em>哪些</em>学校达标,但常常会改变<em>达标学校之间的名次顺序</em>——如果一所学校最弱的那个系统本身上榜院校较少(例如 ARWU 或 QS),那么在百分位归一化下,同样的原始名次会比在上榜院校更多的系统(例如 THE 或 US News)中受到更大的"扣分"。在"美国内部视角"下,五个系统本就共享同一个31所学校的分母,因此归一化不会改变那里的排序结果。</p>
       </div>
     </div>
   </div>
@@ -561,7 +577,7 @@
             <text x="88" y="212" fill="#9b7ede">US NEWS</text>
           </g>
         </svg>
-        <p class="diagram-caption" id="diagram-caption">每片花瓣代表一个排名系统自己的前25名俱乐部。共有11所学校同时落在每片花瓣之内——这个交集即为共识名单。</p>
+        <p class="diagram-caption" id="diagram-caption">每片花瓣代表一个排名系统自己的前25名俱乐部。共有10所学校同时落在每片花瓣之内——这个交集即为共识名单。</p>
         <div class="petal-legend">
           <span><span class="dot" style="background:var(--qs)"></span>QS 世界大学排名(2027)</span>
           <span><span class="dot" style="background:var(--the)"></span>泰晤士高等教育排名(2027)</span>
@@ -573,8 +589,9 @@
 
       <div class="table-col">
         <div class="results-head">
-          <h2 id="results-heading">共有 11 所学校通过筛选</h2>
+          <h2 id="results-heading">共有 10 所学校通过筛选</h2>
           <p class="results-note" id="results-note-text">按共识得分排序。所有数据均直接对照各发布方的最新官方发布核实。除标注 * 外均为确切数值。</p>
+          <p class="results-note" id="method-note" style="margin-top:4px;"></p>
         </div>
         <div class="ranking-scroll" role="region" aria-label="大学排名表，可横向滚动" tabindex="0"><table>
           <thead>
@@ -752,13 +769,32 @@ const ARWU_BAND_DISPLAY = {
 // US VIEW: same underlying schools, but here we show a numeric relative rank (from the band midpoint) with an asterisk
 const ARWU_ESTIMATED = new Set(["PennState","Brown","GeorgiaTech","BostonU","CMU"]);
 
-function score(key, raw){
+// Verified total ranked/evaluated pool size for each system's current edition, used only
+// by the percentile-normalized scoring method. Order matches the raw-data column order:
+// US News, THE, QS, CWUR, ARWU. Sources: US News "more than 2,250 schools" (2026-27 FAQ/press
+// release); THE "2,297 institutions ranked" (2027 participation announcement); QS "1,504
+// institutions featured" (2027 results); CWUR "Global 2000" (fixed by name); ARWU "best 1000
+// published" (ShanghaiRanking's own description, every edition).
+const POOL_SIZES_GLOBAL = [2250, 2297, 1504, 2000, 1000];
+// US View: every system is already re-numbered across the same 31-school candidate pool, so
+// the "pool size" is identical (31) for all five columns. Percentile-normalizing against an
+// identical denominator is a linear rescale of the raw average and never changes the order —
+// included here only so the toggle behaves consistently across both views.
+const POOL_SIZES_US = [31, 31, 31, 31, 31];
+
+function score(key, raw, view, method){
   const r = raw[key];
+  if(method === 'normalized'){
+    const pools = view === 'us' ? POOL_SIZES_US : POOL_SIZES_GLOBAL;
+    let sum = 0;
+    for(let i=0;i<5;i++){ sum += (r[i] / pools[i]) * 100; }
+    return sum / 5;
+  }
   return (r[0]+r[1]+r[2]+r[3]+r[4])/5;
 }
 
-function buildRows(keys, raw){
-  const withScores = keys.map(k => ({ key:k, s: score(k, raw) }));
+function buildRows(keys, raw, view, method){
+  const withScores = keys.map(k => ({ key:k, s: score(k, raw, view, method) }));
   withScores.sort((a,b) => a.s - b.s);
   let rows = [];
   let rank = 1;
@@ -820,8 +856,8 @@ function activateSchoolMarks(root){
   });
 }
 
-function renderTable(keys, championKeys, raw, view){
-  const rows = buildRows(keys, raw);
+function renderTable(keys, championKeys, raw, view, method){
+  const rows = buildRows(keys, raw, view, method);
   const tbody = document.getElementById('results-tbody');
   tbody.innerHTML = rows.map(row => {
     const k = row.key;
@@ -829,13 +865,14 @@ function renderTable(keys, championKeys, raw, view){
     const r = raw[k];
     const champ = championKeys.includes(k) ? ' champion' : '';
     const rankLabel = row.tie ? ('='+row.rank) : row.rank;
+    const scoreText = method === 'normalized' ? row.s.toFixed(2)+'%' : row.s.toFixed(1);
     let arwuCell, scoreDisplay;
     if(view === 'global'){
       arwuCell = ARWU_BAND_DISPLAY[k] ? ARWU_BAND_DISPLAY[k] : r[4];
-      scoreDisplay = ARWU_BAND_DISPLAY[k] ? row.s.toFixed(1)+'*' : row.s.toFixed(1);
+      scoreDisplay = ARWU_BAND_DISPLAY[k] ? scoreText+'*' : scoreText;
     } else {
       arwuCell = ARWU_ESTIMATED.has(k) ? r[4]+'*' : r[4];
-      scoreDisplay = ARWU_ESTIMATED.has(k) ? row.s.toFixed(1)+'*' : row.s.toFixed(1);
+      scoreDisplay = ARWU_ESTIMATED.has(k) ? scoreText+'*' : scoreText;
     }
     return `<tr class="${champ.trim()}">
       <td class="rank-badge">${rankLabel}</td>
@@ -1160,6 +1197,7 @@ const VIEW_META = {
 
 let currentView = 'global';
 let currentCutoff = 25;
+let currentMethod = 'raw';
 
 function applyViewMeta(view){
   const m = VIEW_META[view];
@@ -1168,13 +1206,28 @@ function applyViewMeta(view){
   document.getElementById('approach-body-content').innerHTML = m.approachHTML;
   document.getElementById('results-note-text').innerHTML = m.resultsNote;
   document.getElementById('table-head-row').innerHTML = m.headerRow;
+  updateScoreHeaderLabel();
+}
+
+function updateScoreHeaderLabel(){
+  const th = document.querySelector('#table-head-row th:last-child');
+  if(th) th.textContent = currentMethod === 'normalized' ? '百分位' : '得分';
+  const note = document.getElementById('method-note');
+  if(note){
+    note.textContent = currentMethod === 'normalized'
+      ? (currentView === 'us'
+          ? '百分位归一化:在"美国内部视角"中,五个系统本就共享同一个31所学校的分母,因此归一化不会改变排序结果(与原始名次平均一致)。'
+          : '百分位归一化:每个名次先除以该系统的总上榜院校数再求平均,因此顺序可能与原始名次平均不同——详见下方"方法说明"。')
+      : '原始名次平均:直接对五个系统的名次取平均,不针对各系统上榜院校数量的差异做任何调整。';
+  }
 }
 
 function renderTab(n){
   currentCutoff = n;
   const meta = VIEW_META[currentView];
   const t = meta.tabs[n];
-  renderTable(t.keys, t.champions, meta.raw, currentView);
+  renderTable(t.keys, t.champions, meta.raw, currentView, currentMethod);
+  updateScoreHeaderLabel();
   document.getElementById('diagram-cutoff-label').textContent = t.diagramLabel;
   document.getElementById('diagram-caption').textContent = t.diagramCaption;
   document.getElementById('approach-cutoff-text').textContent = t.approachCutoff;
@@ -1193,7 +1246,7 @@ function renderTab(n){
 
 function switchView(view){
   currentView = view;
-  document.querySelectorAll('.view-btn').forEach(btn => {
+  document.querySelectorAll('[data-view]').forEach(btn => {
     const active = btn.getAttribute('data-view') === view;
     btn.classList.toggle('active', active);
     btn.setAttribute('aria-selected', active ? 'true' : 'false');
@@ -1202,12 +1255,26 @@ function switchView(view){
   renderTab(currentCutoff);
 }
 
+function switchMethod(method){
+  currentMethod = method;
+  document.querySelectorAll('[data-method]').forEach(btn => {
+    const active = btn.getAttribute('data-method') === method;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+  renderTab(currentCutoff);
+}
+
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => renderTab(btn.getAttribute('data-tab')));
 });
 
-document.querySelectorAll('.view-btn').forEach(btn => {
+document.querySelectorAll('[data-view]').forEach(btn => {
   btn.addEventListener('click', () => switchView(btn.getAttribute('data-view')));
+});
+
+document.querySelectorAll('[data-method]').forEach(btn => {
+  btn.addEventListener('click', () => switchMethod(btn.getAttribute('data-method')));
 });
 
 applyViewMeta('global');
