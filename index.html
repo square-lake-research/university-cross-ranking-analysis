@@ -461,6 +461,10 @@
       <button class="view-btn active" data-view="global" role="tab" aria-selected="true">Global View</button>
       <button class="view-btn" data-view="us" role="tab">US View</button>
     </span>
+    <span class="view-toggle method-toggle" role="tablist" aria-label="Scoring method">
+      <button class="view-btn method-btn active" data-method="raw" role="tab" aria-selected="true">Raw Rank Avg.</button>
+      <button class="view-btn method-btn" data-method="normalized" role="tab">Percentile-Normalized</button>
+    </span>
   </div>
   <h1 id="hero-title">Which colleges survive <em>every</em> ranking lens — not just one.</h1>
   <p class="hero-sub" id="hero-sub-text">Five major global ranking systems disagree constantly, because each rewards a different definition of excellence. This report finds the US universities that place consistently across <strong>all five</strong> — QS, THE, ARWU, CWUR, and US News — at once. Pick a cutoff below to see how the qualifying set changes.</p>
@@ -505,6 +509,18 @@
         <p><strong>The score:</strong> for the schools that clear the bar, rank them by the simple average of their five positions — a lower number means the school is consistently near the very top, not just consistently qualifying.</p>
         <div class="formula">consensus_score = ( US News + THE + QS + CWUR + ARWU ) / 5</div>
         <p>This rewards <em>robustness</em> over <em>peak performance</em>. A school that's 1st in one system and 60th in another never qualifies, no matter how impressive that first-place finish looks in isolation.</p>
+      </div>
+    </div>
+    <div class="approach-grid">
+      <div>
+        <h2>Raw rank vs. percentile-normalized scoring</h2>
+      </div>
+      <div class="approach-body">
+        <p>The <strong>Raw Rank Avg. / Percentile-Normalized</strong> toggle at the top of the page changes only how the consensus score is <em>calculated</em> for schools that already qualify — it never changes which schools qualify, since the filter is always "every system's raw rank at or better than the cutoff."</p>
+        <p><strong>Raw Rank Average</strong> (the default) treats a rank of 20 the same way in every system, even though the five systems don't rank the same number of institutions. <strong>Percentile-Normalized</strong> instead divides each rank by that system's total ranked pool before averaging, so a rank of 20 in a 1,000-school list (the top 2%) counts for more than a rank of 20 in a 2,300-school list (under the top 1%).</p>
+        <div class="formula">percentile_score = average( rank<sub>i</sub> ÷ pool_size<sub>i</sub> × 100 ) across the five systems</div>
+        <p>Pool sizes used, each from the publisher's own current-edition description: US News Best Global 2026–27 — more than 2,250 schools evaluated; THE World University Rankings 2027 — 2,297 institutions ranked; QS World University Rankings 2027 — 1,504 institutions featured; CWUR Global 2000, 2026 — 2,000 by definition; ARWU / ShanghaiRanking 2026 — the best 1,000 published.</p>
+        <p>In practice, switching methods rarely changes <em>who</em> qualifies, but it can reorder <em>who ranks higher within the set</em> — a school whose weakest system has a small ranked pool (like ARWU or QS) gets penalized more under percentile-normalization than the same raw rank in a system with a larger pool (like THE or US News). In the US View, all five systems already share the same 31-school pool, so normalizing has no effect on the order there.</p>
       </div>
     </div>
   </div>
@@ -555,7 +571,7 @@
             <text x="88" y="212" fill="#9b7ede">US NEWS</text>
           </g>
         </svg>
-        <p class="diagram-caption" id="diagram-caption">Each petal is one ranking system's own top-25 club. Eleven schools sit inside every petal at once — the intersection is the consensus set.</p>
+        <p class="diagram-caption" id="diagram-caption">Each petal is one ranking system's own top-25 club. Ten schools sit inside every petal at once — the intersection is the consensus set.</p>
         <div class="petal-legend">
           <span><span class="dot" style="background:var(--qs)"></span>QS World University Rankings (2027)</span>
           <span><span class="dot" style="background:var(--the)"></span>Times Higher Education (2027)</span>
@@ -567,8 +583,9 @@
 
       <div class="table-col">
         <div class="results-head">
-          <h2 id="results-heading">11 schools clear the bar</h2>
+          <h2 id="results-heading">10 schools clear the bar</h2>
           <p class="results-note" id="results-note-text">Sorted by consensus score. All figures verified directly against each publisher's own current release. No estimates unless marked *.</p>
+          <p class="results-note" id="method-note" style="margin-top:4px;"></p>
         </div>
         <table>
           <thead>
@@ -746,13 +763,32 @@ const ARWU_BAND_DISPLAY = {
 // US VIEW: same underlying schools, but here we show a numeric relative rank (from the band midpoint) with an asterisk
 const ARWU_ESTIMATED = new Set(["PennState","Brown","GeorgiaTech","BostonU","CMU"]);
 
-function score(key, raw){
+// Verified total ranked/evaluated pool size for each system's current edition, used only
+// by the percentile-normalized scoring method. Order matches the raw-data column order:
+// US News, THE, QS, CWUR, ARWU. Sources: US News "more than 2,250 schools" (2026-27 FAQ/press
+// release); THE "2,297 institutions ranked" (2027 participation announcement); QS "1,504
+// institutions featured" (2027 results); CWUR "Global 2000" (fixed by name); ARWU "best 1000
+// published" (ShanghaiRanking's own description, every edition).
+const POOL_SIZES_GLOBAL = [2250, 2297, 1504, 2000, 1000];
+// US View: every system is already re-numbered across the same 31-school candidate pool, so
+// the "pool size" is identical (31) for all five columns. Percentile-normalizing against an
+// identical denominator is a linear rescale of the raw average and never changes the order —
+// included here only so the toggle behaves consistently across both views.
+const POOL_SIZES_US = [31, 31, 31, 31, 31];
+
+function score(key, raw, view, method){
   const r = raw[key];
+  if(method === 'normalized'){
+    const pools = view === 'us' ? POOL_SIZES_US : POOL_SIZES_GLOBAL;
+    let sum = 0;
+    for(let i=0;i<5;i++){ sum += (r[i] / pools[i]) * 100; }
+    return sum / 5;
+  }
   return (r[0]+r[1]+r[2]+r[3]+r[4])/5;
 }
 
-function buildRows(keys, raw){
-  const withScores = keys.map(k => ({ key:k, s: score(k, raw) }));
+function buildRows(keys, raw, view, method){
+  const withScores = keys.map(k => ({ key:k, s: score(k, raw, view, method) }));
   withScores.sort((a,b) => a.s - b.s);
   let rows = [];
   let rank = 1;
@@ -815,8 +851,8 @@ function activateSchoolMarks(root){
   });
 }
 
-function renderTable(keys, championKeys, raw, view){
-  const rows = buildRows(keys, raw);
+function renderTable(keys, championKeys, raw, view, method){
+  const rows = buildRows(keys, raw, view, method);
   const tbody = document.getElementById('results-tbody');
   tbody.innerHTML = rows.map(row => {
     const k = row.key;
@@ -824,13 +860,14 @@ function renderTable(keys, championKeys, raw, view){
     const r = raw[k];
     const champ = championKeys.includes(k) ? ' champion' : '';
     const rankLabel = row.tie ? ('='+row.rank) : row.rank;
+    const scoreText = method === 'normalized' ? row.s.toFixed(2)+'%' : row.s.toFixed(1);
     let arwuCell, scoreDisplay;
     if(view === 'global'){
       arwuCell = ARWU_BAND_DISPLAY[k] ? ARWU_BAND_DISPLAY[k] : r[4];
-      scoreDisplay = ARWU_BAND_DISPLAY[k] ? row.s.toFixed(1)+'*' : row.s.toFixed(1);
+      scoreDisplay = ARWU_BAND_DISPLAY[k] ? scoreText+'*' : scoreText;
     } else {
       arwuCell = ARWU_ESTIMATED.has(k) ? r[4]+'*' : r[4];
-      scoreDisplay = ARWU_ESTIMATED.has(k) ? row.s.toFixed(1)+'*' : row.s.toFixed(1);
+      scoreDisplay = ARWU_ESTIMATED.has(k) ? scoreText+'*' : scoreText;
     }
     return `<tr class="${champ.trim()}">
       <td class="rank-badge">${rankLabel}</td>
@@ -1155,6 +1192,7 @@ const VIEW_META = {
 
 let currentView = 'global';
 let currentCutoff = 25;
+let currentMethod = 'raw';
 
 function applyViewMeta(view){
   const m = VIEW_META[view];
@@ -1163,13 +1201,28 @@ function applyViewMeta(view){
   document.getElementById('approach-body-content').innerHTML = m.approachHTML;
   document.getElementById('results-note-text').innerHTML = m.resultsNote;
   document.getElementById('table-head-row').innerHTML = m.headerRow;
+  updateScoreHeaderLabel();
+}
+
+function updateScoreHeaderLabel(){
+  const th = document.querySelector('#table-head-row th:last-child');
+  if(th) th.textContent = currentMethod === 'normalized' ? 'Percentile' : 'Score';
+  const note = document.getElementById('method-note');
+  if(note){
+    note.textContent = currentMethod === 'normalized'
+      ? (currentView === 'us'
+          ? 'Percentile-normalized: in the US View all five systems share the same 31-school pool, so normalizing doesn’t change the ranking vs. raw averaging.'
+          : 'Percentile-normalized: each rank is divided by that system’s total ranked pool before averaging, so order can differ from the raw-rank average — see "How this works" below.')
+      : 'Raw rank average: each system’s position is averaged as-is, with no adjustment for how many institutions it ranks.';
+  }
 }
 
 function renderTab(n){
   currentCutoff = n;
   const meta = VIEW_META[currentView];
   const t = meta.tabs[n];
-  renderTable(t.keys, t.champions, meta.raw, currentView);
+  renderTable(t.keys, t.champions, meta.raw, currentView, currentMethod);
+  updateScoreHeaderLabel();
   document.getElementById('diagram-cutoff-label').textContent = t.diagramLabel;
   document.getElementById('diagram-caption').textContent = t.diagramCaption;
   document.getElementById('approach-cutoff-text').textContent = t.approachCutoff;
@@ -1188,7 +1241,7 @@ function renderTab(n){
 
 function switchView(view){
   currentView = view;
-  document.querySelectorAll('.view-btn').forEach(btn => {
+  document.querySelectorAll('[data-view]').forEach(btn => {
     const active = btn.getAttribute('data-view') === view;
     btn.classList.toggle('active', active);
     btn.setAttribute('aria-selected', active ? 'true' : 'false');
@@ -1197,12 +1250,26 @@ function switchView(view){
   renderTab(currentCutoff);
 }
 
+function switchMethod(method){
+  currentMethod = method;
+  document.querySelectorAll('[data-method]').forEach(btn => {
+    const active = btn.getAttribute('data-method') === method;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+  renderTab(currentCutoff);
+}
+
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => renderTab(btn.getAttribute('data-tab')));
 });
 
-document.querySelectorAll('.view-btn').forEach(btn => {
+document.querySelectorAll('[data-view]').forEach(btn => {
   btn.addEventListener('click', () => switchView(btn.getAttribute('data-view')));
+});
+
+document.querySelectorAll('[data-method]').forEach(btn => {
+  btn.addEventListener('click', () => switchMethod(btn.getAttribute('data-method')));
 });
 
 applyViewMeta('global');
