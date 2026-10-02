@@ -297,6 +297,34 @@
   .results-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:24px; flex-wrap:wrap; }
   .results-head h2{ font-size:clamp(22px,3vw,30px); color:#fff; font-weight:600; }
   .results-note{ font-size:12.5px; color:var(--text-faint); max-width:260px; }
+  .scoring-options-section{ background:var(--bg); border-bottom:1px solid var(--line); padding:16px 0; }
+  .scoring-options{ display:flex; gap:28px; flex-wrap:wrap; justify-content:center; }
+  .scoring-options label{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing:0.7px;
+    color:var(--text-faint);
+  }
+  .scoring-options select{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    font-weight:500;
+    padding:7px 12px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--text);
+    cursor:pointer;
+    transition:border-color 0.15s ease;
+  }
+  .scoring-options select:hover{ border-color:#4a4d5a; }
+  .scoring-options select:focus{ outline:2px solid var(--gold); outline-offset:1px; }
+  .scoring-options select option{ background:var(--surface); color:var(--text); }
 
   table{ width:100%; border-collapse:collapse; font-size:14px; }
   thead th{
@@ -467,10 +495,6 @@
       <button class="view-btn active" data-view="global" role="tab" aria-selected="true">全球视角</button>
       <button class="view-btn" data-view="us" role="tab">美国内部视角</button>
     </span>
-    <span class="view-toggle method-toggle" role="tablist" aria-label="计分方法">
-      <button class="view-btn method-btn active" data-method="raw" role="tab" aria-selected="true">原始名次平均</button>
-      <button class="view-btn method-btn" data-method="normalized" role="tab">百分位归一化</button>
-    </span>
   </div>
   <h1 id="hero-title">能同时扛住<em>每一个</em>排名系统的大学——而不只是其中一个。</h1>
   <p class="hero-sub" id="hero-sub-text">五大全球排名系统的评判标准截然不同,彼此之间的结果也经常互相矛盾。本报告找出了能<strong>同时</strong>在这五个系统——QS、THE、ARWU、CWUR 和 US News——中都保持稳定名次的美国大学。在下方选择一个筛选范围,看看符合条件的名单如何变化。</p>
@@ -529,8 +553,39 @@
         <p>实际效果是:切换计分方法很少会改变<em>哪些</em>学校达标,但常常会改变<em>达标学校之间的名次顺序</em>——如果一所学校最弱的那个系统本身上榜院校较少(例如 ARWU 或 QS),那么在百分位归一化下,同样的原始名次会比在上榜院校更多的系统(例如 THE 或 US News)中受到更大的"扣分"。在"美国内部视角"下,五个系统本就共享同一个31所学校的分母,因此归一化不会改变那里的排序结果。</p>
       </div>
     </div>
+    <div class="approach-grid">
+      <div>
+        <h2>五系统一致入围 vs. 平均最优入围</h2>
+      </div>
+      <div class="approach-body">
+        <p><strong>「五系统一致入围 / 平均最优入围」</strong>这一切换按钮改变的是比上面计分方式更根本的东西:它改变的是<em>哪些学校能入围</em>,而不只是入围之后的排序。</p>
+        <p><strong>五系统一致入围</strong>(本报告默认且全文采用的方式)只保留在<strong>全部五个系统中</strong>都达到该档门槛的学校——只要有一个系统没达标,这所学校就整体出局,无论其余四个系统的名次有多出色。</p>
+        <p><strong>平均最优入围</strong>则换一种方式:把这31所候选学校按平均得分(依当前所选计分方式,原始名次或百分位归一化)排序,直接取平均分最靠前的若干所——并不要求任何单一系统的名次必须达到该档门槛。只要其余四个系统足够出色,一个系统偏弱的学校依然可能入选;反过来,一所在每个系统都勉强达标的学校,也可能被一所"每项都不错、在一两项上尤其突出"的学校挤出去。</p>
+        <div class="formula">五系统一致:达标 ⟺ 五个系统的名次<sub>i</sub>均 ≤ N&nbsp;&nbsp;·&nbsp;&nbsp;平均最优:达标 ⟺ 平均得分排在前N位</div>
+        <p>在大多数门槛下,两种方法选出的学校完全相同——但并非总是如此。例如在"全球视角·前20"这一档,平均最优入围会用加州理工取代宾大(宾大在五个系统里唯一的短板正是 US News 第23名,但在另外四个系统均为前11名)。表格上方的入围规则说明会在两种方法在当前门槛下结果不同时,明确标出差异。</p>
+      </div>
+    </div>
   </div>
 </details>
+
+<div class="scoring-options-section">
+  <div class="wrap">
+    <div class="scoring-options">
+      <label>入围规则
+        <select id="selection-select" aria-label="入围规则">
+          <option value="consistent" selected>五系统一致入围</option>
+          <option value="bestavg">平均最优入围</option>
+        </select>
+      </label>
+      <label>计分方式
+        <select id="method-select" aria-label="计分方法">
+          <option value="raw" selected>原始名次平均</option>
+          <option value="normalized">百分位归一化</option>
+        </select>
+      </label>
+    </div>
+  </div>
+</div>
 
 <div class="tab-bar-section">
   <div class="wrap">
@@ -590,8 +645,11 @@
       <div class="table-col">
         <div class="results-head">
           <h2 id="results-heading">共有 10 所学校通过筛选</h2>
-          <p class="results-note" id="results-note-text">按共识得分排序。所有数据均直接对照各发布方的最新官方发布核实。除标注 * 外均为确切数值。</p>
-          <p class="results-note" id="method-note" style="margin-top:4px;"></p>
+          <div class="results-meta">
+            <p class="results-note" id="results-note-text">按共识得分排序。所有数据均直接对照各发布方的最新官方发布核实。除标注 * 外均为确切数值。</p>
+            <p class="results-note" id="method-note" style="margin-top:4px;"></p>
+            <p class="results-note" id="selection-note" style="margin-top:4px;"></p>
+          </div>
         </div>
         <div class="ranking-scroll" role="region" aria-label="大学排名表，可横向滚动" tabindex="0"><table>
           <thead>
@@ -1198,6 +1256,57 @@ const VIEW_META = {
 let currentView = 'global';
 let currentCutoff = 25;
 let currentMethod = 'raw';
+let currentSelection = 'consistent';
+
+// 平均最优入围:与"五系统一致入围"(TABS_GLOBAL/TABS_US 中按 AND 规则筛选)不同,
+// 这里把31所候选学校按当前计分方式的平均得分排序,取与"一致入围"相同数量的学校——
+// 这样两种方法在同一门槛下比较的学校数量始终相等,但入选学校不要求在每个系统都单独达标。
+function buildBestAverageTab(view, n){
+  const meta = VIEW_META[view];
+  const raw = meta.raw;
+  const consistentTab = meta.tabs[n];
+  const consistentKeys = consistentTab ? consistentTab.keys : [];
+  const take = consistentKeys.length;
+
+  const pool = ALL_31.filter(k => raw[k]);
+  const ranked = pool.slice().sort((a,b) => score(a, raw, view, currentMethod) - score(b, raw, view, currentMethod));
+  const keys = ranked.slice(0, take);
+  const topScore = take > 0 ? score(keys[0], raw, view, currentMethod) : 0;
+  const champions = keys.filter(k => Math.abs(score(k, raw, view, currentMethod) - topScore) < 0.001);
+
+  const keySet = new Set(keys);
+  const consistentSet = new Set(consistentKeys);
+  const added = keys.filter(k => !consistentSet.has(k));
+  const removed = consistentKeys.filter(k => !keySet.has(k));
+
+  const methodLabel = currentMethod === 'normalized' ? '百分位归一化' : '原始名次';
+  const diagramCaption = `平均最优入围在本门槛下保持与五系统一致入围相同的入围数量(${take}所),但按${methodLabel}平均得分从全部${pool.length}所候选学校中选出,而不要求每所学校在每个系统都单独达到第${n}名及以上。`;
+
+  let nearHTML;
+  if(added.length === 0 && removed.length === 0){
+    nearHTML = `<div class="near-note">在此门槛下,平均最优入围选出的<strong>与五系统一致入围完全相同的${take}所学校</strong>——每所平均分足够高、能入围这份名单的学校,恰好也在五个系统中都单独达到第${n}名及以上。两种方法在此一致。</div>`;
+  } else {
+    const addedText = added.length ? added.map(k => DISPLAY_NAME[k]).join('、') : '无';
+    const removedText = removed.length ? removed.map(k => DISPLAY_NAME[k]).join('、') : '无';
+    nearHTML = `<div class="near-note"><strong>与同一门槛下的五系统一致入围相比(两者均为${take}所学校)</strong>——平均最优新增:${addedText};被替换掉:${removedText}。新增的学校在某一个系统上确实没能达到第${n}名,但其余系统的表现足以在平均分上弥补过来;被替换掉的学校虽然在每个系统都单独达标,但平均分不如现在排在它们前面的学校。</div>`;
+  }
+
+  return {
+    keys,
+    champions,
+    diagramLabel: `TOP ${n}`,
+    diagramCaption,
+    approachCutoff: String(n),
+    resultsHeading: `平均最优入围 ${take} 所学校`,
+    nearHeading: (added.length || removed.length) ? '与五系统一致入围的差异' : '与五系统一致入围结果相同',
+    nearSub: `平均最优入围在此门槛下保持与五系统一致入围相同的${take}所入围数量,但按平均得分填充,而不要求每个系统都单独达到第${n}名及以上。`,
+    nearHTML,
+    caveats: [
+      `平均最优入围选出的是${methodLabel}平均得分最高的${take}所学校——入围数量与五系统一致入围在此门槛下相同,但评判标准是整体平均表现,而非要求每个系统都单独达到第${n}名及以上。`,
+      `在平均最优入围下,一个系统的弱势可以被其他系统的强势弥补;而在五系统一致入围下,只要有一个系统没达标,无论其余四个系统名次多出色,该校都会整体出局。`
+    ]
+  };
+}
 
 function applyViewMeta(view){
   const m = VIEW_META[view];
@@ -1222,12 +1331,22 @@ function updateScoreHeaderLabel(){
   }
 }
 
+function updateSelectionNote(){
+  const note = document.getElementById('selection-note');
+  if(note){
+    note.textContent = currentSelection === 'bestavg'
+      ? '平均最优入围:按整体平均得分排序,取排名最靠前的若干所——某一系统的弱势可被其他系统弥补。入围学校可能与"五系统一致入围"不同,详见下方"方法说明"。'
+      : '五系统一致入围:学校必须在每个系统都单独达到该门槛及以上——只要有一个系统没达标,无论平均分如何,该校都会出局。';
+  }
+}
+
 function renderTab(n){
   currentCutoff = n;
   const meta = VIEW_META[currentView];
-  const t = meta.tabs[n];
+  const t = currentSelection === 'bestavg' ? buildBestAverageTab(currentView, n) : meta.tabs[n];
   renderTable(t.keys, t.champions, meta.raw, currentView, currentMethod);
   updateScoreHeaderLabel();
+  updateSelectionNote();
   document.getElementById('diagram-cutoff-label').textContent = t.diagramLabel;
   document.getElementById('diagram-caption').textContent = t.diagramCaption;
   document.getElementById('approach-cutoff-text').textContent = t.approachCutoff;
@@ -1257,11 +1376,15 @@ function switchView(view){
 
 function switchMethod(method){
   currentMethod = method;
-  document.querySelectorAll('[data-method]').forEach(btn => {
-    const active = btn.getAttribute('data-method') === method;
-    btn.classList.toggle('active', active);
-    btn.setAttribute('aria-selected', active ? 'true' : 'false');
-  });
+  const sel = document.getElementById('method-select');
+  if(sel) sel.value = method;
+  renderTab(currentCutoff);
+}
+
+function switchSelection(sel){
+  currentSelection = sel;
+  const el = document.getElementById('selection-select');
+  if(el) el.value = sel;
   renderTab(currentCutoff);
 }
 
@@ -1273,9 +1396,11 @@ document.querySelectorAll('[data-view]').forEach(btn => {
   btn.addEventListener('click', () => switchView(btn.getAttribute('data-view')));
 });
 
-document.querySelectorAll('[data-method]').forEach(btn => {
-  btn.addEventListener('click', () => switchMethod(btn.getAttribute('data-method')));
-});
+const methodSelectEl = document.getElementById('method-select');
+if(methodSelectEl) methodSelectEl.addEventListener('change', (e) => switchMethod(e.target.value));
+
+const selectionSelectEl = document.getElementById('selection-select');
+if(selectionSelectEl) selectionSelectEl.addEventListener('change', (e) => switchSelection(e.target.value));
 
 applyViewMeta('global');
 renderTab(25);
